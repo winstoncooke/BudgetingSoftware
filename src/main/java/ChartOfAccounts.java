@@ -86,7 +86,6 @@ public class ChartOfAccounts {
 
         // Print Assets
         System.out.println("\nASSETS");
-        System.out.println("______");
         if (assets.size() > 0) {
             for (Account asset : assets) {
                 System.out.println(asset.getName());
