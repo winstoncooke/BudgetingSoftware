@@ -20,11 +20,20 @@ public class ChartOfAccounts {
         this.equityTotalBalance = 0.00;
     }
 
-    // Return a list of account names
+    // Return a list of all account names
     public ArrayList<String> accountList() {
         ArrayList<String> list = new ArrayList<>();
         for (Account account : accounts) {
             list.add(account.getName());
+        }
+        return list;
+    }
+
+    // Return a list of Asset account names
+    public ArrayList<String> assetList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (Account asset : assets) {
+            list.add(asset.getName());
         }
         return list;
     }
@@ -37,6 +46,15 @@ public class ChartOfAccounts {
         return assetTotalBalance;
     }
 
+    // Return a list of Liability account names
+    public ArrayList<String> liabilityList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (Account liability : liabilities) {
+            list.add(liability.getName());
+        }
+        return list;
+    }
+
     // Sum the total balance for Liability accounts
     public double sumLiabilityAccountsBalance() {
         for (Account liability : liabilities) {
@@ -45,24 +63,21 @@ public class ChartOfAccounts {
         return liabilityTotalBalance;
     }
 
+    // Return a list of Liability account names
+    public ArrayList<String> equityList() {
+        ArrayList<String> list = new ArrayList<>();
+        for (Account equity : equities) {
+            list.add(equity.getName());
+        }
+        return list;
+    }
+
     // Sum the total balance for Equity accounts
     public double sumEquityAccountsBalance() {
         for (Account equity : equities) {
             equityTotalBalance += equity.getBalance();
         }
         return equityTotalBalance;
-    }
-
-    // Returns the account list formatted with numbers
-    public String formattedList() {
-        // Add account names to a list
-        ArrayList<String> formattedList = new ArrayList<>();
-
-        //Format with numbers for printing
-        for (int i = 0; i < accounts.size(); i++) {
-            formattedList.add(Integer.valueOf((i + 1)) + ". " + accounts.get(i));
-        }
-        return "* Chart of Accounts *\n" + formattedList;
     }
 
     public void add(String name, String type) {
@@ -88,7 +103,7 @@ public class ChartOfAccounts {
         System.out.println("\nASSETS");
         if (assets.size() > 0) {
             for (Account asset : assets) {
-                System.out.println(asset.getName());
+                System.out.println(asset.getName() + ": " + asset.getBalance());
             }
         } else {
             System.out.println("* No Asset accounts *");
@@ -98,7 +113,7 @@ public class ChartOfAccounts {
         System.out.println("\nLIABILITIES");
         if (liabilities.size() > 0) {
             for (Account liability : liabilities) {
-                System.out.println(liability.getName());
+                System.out.println(liability.getName() + ": " + liability.getBalance());
             }
         } else {
             System.out.println("* No Liability accounts *");
@@ -108,7 +123,7 @@ public class ChartOfAccounts {
         System.out.println("\nEQUITY");
         if (equities.size() > 0) {
             for (Account equity : equities) {
-                System.out.println(equity.getName());
+                System.out.println(equity.getName() + ": " + equity.getBalance());
             }
         } else {
             System.out.println("* No Equity accounts *");

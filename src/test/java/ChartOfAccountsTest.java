@@ -14,14 +14,47 @@ public class ChartOfAccountsTest {
     }
 
     @Test
-    public void chartOfAccountsIsEmptyAtBeginning() {
+    public void accountsListIsEmptyAtBeginning() {
         assertEquals(0, chartOfAccounts.accountList().size());
     }
 
     @Test
-    public void addingAccountGrowsListByOne() {
+    public void assetListIsEmptyAtBeginning() {
+        assertEquals(0, chartOfAccounts.assetList().size());
+    }
+
+    @Test
+    public void liabilityListIsEmptyAtBeginning() {
+        assertEquals(0, chartOfAccounts.liabilityList().size());
+    }
+
+    @Test
+    public void equityListIsEmptyAtBeginning() {
+        assertEquals(0, chartOfAccounts.equityList().size());
+    }
+
+    @Test
+    public void addingAccountGrowsAccountListByOne() {
         chartOfAccounts.add("Test Account", "Asset");
         assertEquals(1, chartOfAccounts.accountList().size());
+    }
+
+    @Test
+    public void addingAccountGrowsAssetListByOne() {
+        chartOfAccounts.addAsset("Test Account", "Asset");
+        assertEquals(1, chartOfAccounts.assetList().size());
+    }
+
+    @Test
+    public void addingAccountGrowsLiabilityListByOne() {
+        chartOfAccounts.addLiability("Test Account", "Liability");
+        assertEquals(1, chartOfAccounts.liabilityList().size());
+    }
+
+    @Test
+    public void addingAccountGrowsEquityListByOne() {
+        chartOfAccounts.addEquity("Test Account", "Equity");
+        assertEquals(1, chartOfAccounts.equityList().size());
     }
 
     @Test
@@ -31,8 +64,20 @@ public class ChartOfAccountsTest {
     }
 
     @Test
-    public void addingAccountIsProperlyFormatted() {
-        chartOfAccounts.add("Test Account", "Asset");
-        assertTrue(chartOfAccounts.formattedList().contains("1. Test Account"));
+    public void addedAssetAccountIsInList() {
+        chartOfAccounts.addAsset("Test Account", "Asset");
+        assertTrue(chartOfAccounts.assetList().contains("Test Account"));
+    }
+
+    @Test
+    public void addedLiabilityAccountIsInList() {
+        chartOfAccounts.addLiability("Test Account", "Liability");
+        assertTrue(chartOfAccounts.liabilityList().contains("Test Account"));
+    }
+
+    @Test
+    public void addedEquityAccountIsInList() {
+        chartOfAccounts.addEquity("Test Account", "Equity");
+        assertTrue(chartOfAccounts.equityList().contains("Test Account"));
     }
 }
