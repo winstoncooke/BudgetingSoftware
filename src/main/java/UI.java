@@ -2,49 +2,50 @@ import java.util.Scanner;
 
 public class UI {
     private Scanner scanner;
+    private ChartOfAccounts chartOfAccounts;
 
     public UI() {
         this.scanner = new Scanner(System.in);
+        this.chartOfAccounts = new ChartOfAccounts();
     }
 
     public void start() {
-        System.out.println("Welcome.");
-        System.out.println();
+        String user = "Winston"; // Add user accounts in future update
+        System.out.println("Welcome, " + user + ".");
 
         loop: while (true) {
             // Main menu options
-            System.out.println("Please select from the following options:");
+            System.out.println("\nPlease select from the following options:");
             System.out.println("1. Create a new account");
-            System.out.println("2. View chart of accounts");
+            System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
-            System.out.println("4. Log out");
+            System.out.println("0. Log out");
 
             // Input user selection
-            System.out.print("Selection: ");
+            System.out.print("\nSelection: ");
             int input = Integer.parseInt(scanner.nextLine());
+            System.out.println();
             switch (input) {
+                case 0:
+                    System.out.println("You have been logged out. Thank you for your patronage.");
+                    break loop;
                 case 1:
                     newAccount();
                     break;
-                // case 2:
-                    // chartOfAccounts();
-                    // break;
+                 case 2:
+                     displayChartOfAccounts();
+                     break;
                 // case 3:
                     // inputTransaction();
                     // break;
-                case 4:
-                    System.out.println("You have been logged out. Thank you for your patronage.");
-                    break loop;
                 default:
-                    System.out.println("Invalid selection");
+                    System.out.println("ERROR: Invalid selection");
                     break;
             }
         }
     }
 
     public void newAccount() {
-        ChartOfAccounts chartOfAccounts = new ChartOfAccounts();
-
         System.out.println("Enter the name for the new account: ");
         String name = scanner.nextLine();
         String type = "";
@@ -55,15 +56,28 @@ public class UI {
             System.out.println("Enter the account type (Asset, Liability, Equity): ");
             type = scanner.nextLine();
 
-            if (type.equals("Asset") ||
-                type.equals("Liability") ||
-                type.equals("Equity")) {
+            if (type.equals("Asset")) {
+                chartOfAccounts.addAsset(name, type);
+                validType = true;
+            } else if (type.equals("Liability")) {
+                chartOfAccounts.addLiability(name, type);
+                validType = true;
+            } else if (type.equals("Equity")) {
+                chartOfAccounts.addEquity(name, type);
                 validType = true;
             } else {
-                System.out.println("Please enter a valid account type");
+                System.out.println("\nERROR: Please enter a valid account type\n");
             }
         }
         chartOfAccounts.add(name, type);
-        System.out.println("Account" + name + " (" + type + ") " + "created");
+        System.out.println("Account created: " + name + " (" + type + ")");
+    }
+
+    public void displayChartOfAccounts() {
+        if (chartOfAccounts.accountList().size() > 0) {
+            chartOfAccounts.printChartOfAccounts();
+        } else {
+            System.out.println("No accounts have been added to the Chart of Accounts");
+        }
     }
 }
