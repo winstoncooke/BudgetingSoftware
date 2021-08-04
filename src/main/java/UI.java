@@ -43,6 +43,8 @@ public class UI {
     }
 
     public void newAccount() {
+        ChartOfAccounts chartOfAccounts = new ChartOfAccounts();
+
         System.out.println("Enter the name for the new account: ");
         String name = scanner.nextLine();
         String type = "";
@@ -61,7 +63,7 @@ public class UI {
                 System.out.println("Please enter a valid account type");
             }
         }
-        Account account = new Account(name, type);
+        chartOfAccounts.add(name, type);
         System.out.println("Account" + name + " (" + type + ") " + "created");
     }
 }

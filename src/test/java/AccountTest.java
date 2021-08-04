@@ -20,31 +20,32 @@ public class AccountTest {
 
     @Test
     public void newAccountSuccessfullyCreatesAccount() {
-        account = new Account("Test", "Asset");
-        assertEquals("Test", account.getName());
+        account = new Account("Test Account", "Asset");
+        assertEquals("Test Account", account.getName());
     }
 
     @Test
     public void newAccountCanHoldBalance() {
-        account = new Account("Test", "Asset", 123.45);
+        account = new Account("Test Account", "Asset");
+        account.setBalance(123.45);
         assertEquals(123.45, account.getBalance(), 0.0);
     }
 
     @Test
     public void newAccountTypeIsAsset() {
-        account = new Account("Test", "Asset");
+        account = new Account("Test Account", "Asset");
         assertEquals("Asset", account.getType());
     }
 
     @Test
     public void newAccountTypeIsLiability() {
-        account = new Account("Test", "Liability");
+        account = new Account("Test Account", "Liability");
         assertEquals("Liability", account.getType());
     }
 
     @Test
     public void newAccountTypeIsEquity() {
-        account = new Account("Test", "Equity");
+        account = new Account("Test Account", "Equity");
         assertEquals("Equity", account.getType());
     }
 }
