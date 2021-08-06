@@ -11,10 +11,18 @@ public class ChartOfAccountsTest {
         chartOfAccounts = new ChartOfAccounts();
     }
 
-//     Tests for all accounts list
+//     Check that the account list created is initially empty
     @Test
     public void accountsListIsEmptyAtBeginning() {
         assertEquals(0, chartOfAccounts.accountList().size());
+    }
+
+//    Check that account type cannot be something other than Asset, Liability, or Equity
+    @Test
+    public void newAccountMustBeAssetLiabilityOrEquity() {
+        String type = "Fraud";
+        chartOfAccounts.add("Test Account", type);
+        assertEquals(0, chartOfAccounts.accountList(type).size());
     }
 
 //     Tests for Asset accounts list
@@ -27,7 +35,7 @@ public class ChartOfAccountsTest {
     @Test
     public void addingAccountGrowsAssetListByOne() {
         String type = "Asset";
-        chartOfAccounts.add("Test Account", type);
+        chartOfAccounts.add("Asset Account", type);
         assertEquals(1, chartOfAccounts.accountList(type).size());
     }
 

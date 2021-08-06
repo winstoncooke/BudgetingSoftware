@@ -10,12 +10,12 @@ public class UI {
     }
 
     public void start() {
-        String user = "Winston"; // Add user accounts in future update
+        String user = "Winston"; // Add user account support in a future release
         System.out.println("Welcome, " + user + ".");
 
         loop: while (true) {
 //             Main menu options
-            System.out.println("\nPlease select from the following options:");
+            System.out.println("\nSelect from the following options:");
             System.out.println("1. Create a new account");
             System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
@@ -46,16 +46,27 @@ public class UI {
         String type = "";
         boolean validType = false;
         while (!validType) {
-            System.out.println("Enter the account type (Asset, Liability, Equity): ");
-            type = scanner.nextLine();
+            System.out.println("Select a number option for your desired account type:");
+            System.out.println("1. Asset");
+            System.out.println("2. Liability");
+            System.out.println("3. Equity");
+            int input = Integer.parseInt(scanner.nextLine());
+
+            if (input == 1) {
+                type = "Asset";
+            } else if (input == 2) {
+                type = "Liability";
+            } else if (input == 3) {
+                type = "Equity";
+            } else {
+                System.out.println("\nERROR: Please choose a valid account type\n");
+            }
 
             if (type.equals("Asset") ||
                 type.equals("Liability") ||
                 type.equals("Equity")) {
                 chartOfAccounts.add(name, type);
                 validType = true;
-            } else {
-                System.out.println("\nERROR: Please enter a valid account type\n");
             }
         }
         System.out.println("Account created: " + name + " (" + type + ")");

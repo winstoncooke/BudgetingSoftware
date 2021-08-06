@@ -25,7 +25,7 @@ public class AccountTest {
     }
 
     @Test
-    public void newAccountCanHoldBalance() {
+    public void setBalanceFunctionsProperly() {
         account = new Account("Test Account", "Asset");
         account.setBalance(123.45);
         assertEquals(123.45, account.getBalance(), 0.0);
