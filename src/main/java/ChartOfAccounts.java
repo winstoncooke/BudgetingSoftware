@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class ChartOfAccounts {
-    private ArrayList<Account> accounts;
     private ArrayList<Account> assets;
     private ArrayList<Account> liabilities;
     private ArrayList<Account> equities;
@@ -11,7 +10,6 @@ public class ChartOfAccounts {
     private double equityTotalBalance;
 
     public ChartOfAccounts() {
-        this.accounts = new ArrayList<>();
         this.assets = new ArrayList<>();
         this.assetTotalBalance = 0.00;
         this.liabilities = new ArrayList<>();
@@ -20,36 +18,72 @@ public class ChartOfAccounts {
         this.equityTotalBalance = 0.00;
     }
 
-//     Return a list of all account names
+//    Return list of all accounts
     public ArrayList<Account> accountList() {
         ArrayList<Account> list = new ArrayList<>();
 
-        for (Account account : accounts) {
-            list.add(account);
-        }
+        list.addAll(assets);
+        list.addAll(liabilities);
+        list.addAll(equities);
+
         return list;
+    }
+
+//    Return list of accounts for the requested account type
+    public ArrayList<Account> accountList(String type) {
+        ArrayList<Account> list = new ArrayList<>();
+
+        if (type.equals("Asset")) {
+            list.addAll(assets);
+        }
+
+        if (type.equals("Liability")) {
+            list.addAll(liabilities);
+        }
+
+        if (type.equals("Equity")) {
+            list.addAll(equities);
+        }
+
+        return list;
+    }
+
+//         Add an account to the relevant account type list
+    public void add(String name, String type) {
+//        Add Asset account
+        if (type.equals("Asset")) {
+            this.assets.add(new Account(name, type));
+        }
+
+//        Add Liability account
+        if (type.equals("Liability")) {
+            this.liabilities.add(new Account(name, type));
+        }
+
+//        Add Equity account
+        if (type.equals("Equity")) {
+            this.equities.add(new Account(name, type));
+        }
     }
 
 //     Sum the total balance for all accounts
     public double sumAllAccountsBalance() {
-        for (Account account : accounts) {
-            assetTotalBalance += account.getBalance();
-        }
-        return assetTotalBalance;
-    }
-
-//     Add an account to the all accounts list
-    public void add(String name, String type) {
-        this.accounts.add(new Account(name, type));
-    }
-
-//     Return a list of Asset account names
-    public ArrayList<Account> assetList() {
-        ArrayList<Account> list = new ArrayList<>();
+        double totalBalance = 0.0;
+//        Sum Assets
         for (Account asset : assets) {
-            list.add(asset);
+            totalBalance += asset.getBalance();
         }
-        return list;
+//        Sum Liabilities
+        for (Account liability : liabilities) {
+            totalBalance += liability.getBalance();
+        }
+
+//        Sum Equities
+        for (Account equity : equities) {
+            totalBalance += equity.getBalance();
+        }
+
+        return totalBalance;
     }
 
 //     Sum the total balance for Asset accounts
@@ -60,20 +94,6 @@ public class ChartOfAccounts {
         return assetTotalBalance;
     }
 
-//     Add an account to the Asset accounts list
-    public void addAsset(String name, String type) {
-        this.assets.add(new Account(name, type));
-    }
-
-//     Return a list of Liability account names
-    public ArrayList<Account> liabilityList() {
-        ArrayList<Account> list = new ArrayList<>();
-        for (Account liability : liabilities) {
-            list.add(liability);
-        }
-        return list;
-    }
-
 //     Sum the total balance for Liability accounts
     public double sumLiabilityAccountsBalance() {
         for (Account liability : liabilities) {
@@ -82,31 +102,12 @@ public class ChartOfAccounts {
         return liabilityTotalBalance;
     }
 
-//     Return a list of Liability account names
-    public ArrayList<Account> equityList() {
-        ArrayList<Account> list = new ArrayList<>();
-        for (Account equity : equities) {
-            list.add(equity);
-        }
-        return list;
-    }
-
-//     Add an account to the Liability accounts list
-    public void addLiability(String name, String type) {
-        this.liabilities.add(new Account(name, type));
-    }
-
 //     Sum the total balance for Equity accounts
     public double sumEquityAccountsBalance() {
         for (Account equity : equities) {
             equityTotalBalance += equity.getBalance();
         }
         return equityTotalBalance;
-    }
-
-//     Add an account to the Equity accounts list
-    public void addEquity(String name, String type) {
-        this.equities.add(new Account(name, type));
     }
 
 //    Print a formatted and comprehensive Chart of Accounts

@@ -14,33 +14,26 @@ public class UI {
         System.out.println("Welcome, " + user + ".");
 
         loop: while (true) {
-            // Main menu options
+//             Main menu options
             System.out.println("\nPlease select from the following options:");
             System.out.println("1. Create a new account");
             System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
             System.out.println("0. Log out");
 
-            // Input user selection
+//             Input user selection
             System.out.print("\nSelection: ");
             int input = Integer.parseInt(scanner.nextLine());
             System.out.println();
             switch (input) {
-                case 0:
+                case 0 -> {
                     System.out.println("You have been logged out. Thank you for your patronage.");
                     break loop;
-                case 1:
-                    newAccount();
-                    break;
-                 case 2:
-                     displayChartOfAccounts();
-                     break;
-                // case 3:
-                    // inputTransaction();
-                    // break;
-                default:
-                    System.out.println("ERROR: Invalid selection");
-                    break;
+                }
+                case 1 -> newAccount();
+                case 2 -> displayChartOfAccounts();
+//                case 3 -> inputTransaction();
+                default -> System.out.println("ERROR: Invalid selection");
             }
         }
     }
@@ -48,28 +41,23 @@ public class UI {
     public void newAccount() {
         System.out.println("Enter the name for the new account: ");
         String name = scanner.nextLine();
-        String type = "";
 
-        // Check that user chooses one of the three account types recognized by the system
+//         Check that user chooses one of the three account types recognized by the system
+        String type = "";
         boolean validType = false;
         while (!validType) {
             System.out.println("Enter the account type (Asset, Liability, Equity): ");
             type = scanner.nextLine();
 
-            if (type.equals("Asset")) {
-                chartOfAccounts.addAsset(name, type);
-                validType = true;
-            } else if (type.equals("Liability")) {
-                chartOfAccounts.addLiability(name, type);
-                validType = true;
-            } else if (type.equals("Equity")) {
-                chartOfAccounts.addEquity(name, type);
+            if (type.equals("Asset") ||
+                type.equals("Liability") ||
+                type.equals("Equity")) {
+                chartOfAccounts.add(name, type);
                 validType = true;
             } else {
                 System.out.println("\nERROR: Please enter a valid account type\n");
             }
         }
-        chartOfAccounts.add(name, type);
         System.out.println("Account created: " + name + " (" + type + ")");
     }
 
