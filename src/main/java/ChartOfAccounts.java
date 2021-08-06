@@ -112,7 +112,7 @@ public class ChartOfAccounts {
 
 //    Print a formatted and comprehensive Chart of Accounts
     public void printChartOfAccounts() {
-        System.out.println("Chart of Accounts");
+        System.out.println("* Chart of Accounts *");
 
         // Print Assets
         System.out.println("\nASSETS");

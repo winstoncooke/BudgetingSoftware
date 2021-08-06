@@ -3,19 +3,24 @@ import java.util.Scanner;
 public class UI {
     private Scanner scanner;
     private ChartOfAccounts chartOfAccounts;
+    private String user;
 
     public UI() {
         this.scanner = new Scanner(System.in);
         this.chartOfAccounts = new ChartOfAccounts();
+        this.user = "Winston"; // Add user account support in a future release
     }
 
     public void start() {
-        String user = "Winston"; // Add user account support in a future release
         System.out.println("Welcome, " + user + ".");
+        mainMenu();
+    }
 
+    public void mainMenu() {
         loop: while (true) {
 //             Main menu options
-            System.out.println("\nSelect from the following options:");
+            System.out.println("\n* Main Menu *");
+            System.out.println("Select from the following numbered options:");
             System.out.println("1. Create a new account");
             System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
@@ -46,7 +51,7 @@ public class UI {
         String type = "";
         boolean validType = false;
         while (!validType) {
-            System.out.println("Select a number option for your desired account type:");
+            System.out.println("Select a numbered option for your desired account type:");
             System.out.println("1. Asset");
             System.out.println("2. Liability");
             System.out.println("3. Equity");
@@ -69,7 +74,7 @@ public class UI {
                 validType = true;
             }
         }
-        System.out.println("Account created: " + name + " (" + type + ")");
+        System.out.println("\nAccount created: " + name + " (" + type + ")");
     }
 
     public void displayChartOfAccounts() {
