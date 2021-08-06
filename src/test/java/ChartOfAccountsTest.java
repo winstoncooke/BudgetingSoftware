@@ -7,9 +7,7 @@ public class ChartOfAccountsTest {
     private ChartOfAccounts chartOfAccounts;
 
     @Before
-    public void initialize() {
-        chartOfAccounts = new ChartOfAccounts();
-    }
+    public void initialize() { chartOfAccounts = new ChartOfAccounts(); }
 
 //     Check that the account list created is initially empty
     @Test
@@ -57,7 +55,7 @@ public class ChartOfAccountsTest {
     public void balanceForAssetAccountsCanBeSet() {
         String type = "Asset";
         chartOfAccounts.add("Asset Account", type);
-        chartOfAccounts.accountList(type).get(0).setBalance(1.23);
+        chartOfAccounts.accountList(type).get(0).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.accountList(type).get(0).getBalance(), 0.0);
     }
 
@@ -93,7 +91,7 @@ public class ChartOfAccountsTest {
     public void balanceForLiabilityAccountsCanBeSet() {
         String type = "Liability";
         chartOfAccounts.add("Liability Account", type);
-        chartOfAccounts.accountList(type).get(0).setBalance(1.23);
+        chartOfAccounts.accountList(type).get(0).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.accountList(type).get(0).getBalance(), 0.0);
     }
 
@@ -129,7 +127,18 @@ public class ChartOfAccountsTest {
     public void balanceForEquityAccountsCanBeSet() {
         String type = "Equity";
         chartOfAccounts.add("Equity Account", type);
-        chartOfAccounts.accountList(type).get(0).setBalance(1.23);
+        chartOfAccounts.accountList(type).get(0).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.accountList(type).get(0).getBalance(), 0.0);
+    }
+
+    @Test
+    public void canReturnAccountBalanceByUsingAccountNumber() {
+        String type = "Asset";
+        chartOfAccounts.add("Account 1", type);
+        chartOfAccounts.add("Account 2", type);
+        chartOfAccounts.accountList(type).get(chartOfAccounts.getIndexNumber(1000)).updateBalance(1.23);
+        chartOfAccounts.accountList(type).get(chartOfAccounts.getIndexNumber(1010)).updateBalance(2.46);
+        assertEquals(1.23, chartOfAccounts.getAccountBalance(1000), 0.0);
+        assertEquals(2.46, chartOfAccounts.getAccountBalance(1010), 0.0);
     }
 }

@@ -37,6 +37,10 @@ public class Account {
         this.balance = balance;
     }
 
+    public void updateBalance (double balance) {
+        this.balance += balance;
+    }
+
     @Override
     public String toString() {
         return "Account: " + name + "\nBalance: " + balance;

@@ -8,6 +8,7 @@ public class ChartOfAccounts {
     private int assetAccountNumber;
     private int liabilityAccountNumber;
     private int equityAccountNumber;
+    private int index;
 
     private double assetTotalBalance;
     private double liabilityTotalBalance;
@@ -15,14 +16,16 @@ public class ChartOfAccounts {
 
     public ChartOfAccounts() {
         this.assets = new ArrayList<>();
-        this.assetAccountNumber = 1000;
-        this.assetTotalBalance = 0.00;
         this.liabilities = new ArrayList<>();
-        this.liabilityAccountNumber = 2000;
-        this.liabilityTotalBalance = 0.00;
         this.equities = new ArrayList<>();
-        this.equityAccountNumber = 3000;
+
+        this.assetTotalBalance = 0.00;
+        this.liabilityTotalBalance = 0.00;
         this.equityTotalBalance = 0.00;
+
+        this.assetAccountNumber = 1000;
+        this.liabilityAccountNumber = 2000;
+        this.equityAccountNumber = 3000;
     }
 
 //    Return list of all accounts
@@ -53,7 +56,8 @@ public class ChartOfAccounts {
         return list;
     }
 
-//         Add an account to the relevant account type list
+//    Add an account to the relevant account type list
+//    *** Add feature to check if account name already exists
     public void add(String name, String type) {
 //        Add Asset account
         if (type.equals("Asset")) {
@@ -89,8 +93,20 @@ public class ChartOfAccounts {
         }
     }
 
-    public void setBalance(String name, double balance, String type) {
+    public double getAccountBalance (int accountNumber) {
+        return accountList().get(getIndexNumber(accountNumber)).getBalance();
+    }
 
+    public int getIndexNumber (int accountNumber) {
+
+        for (int i = 0; i < accountList().size(); i++) {
+            if (accountList().get(i).getAccountNumber() == accountNumber) {
+                index = i;
+            }
+        }
+
+
+        return index;
     }
 
 //     Sum the total balance for all accounts

@@ -37,7 +37,7 @@ public class UI {
                 }
                 case 1 -> newAccount();
                 case 2 -> displayChartOfAccounts();
-//                case 3 -> inputTransaction();
+                case 3 -> inputTransaction();
                 default -> System.out.println("ERROR: Invalid selection");
             }
         }
@@ -75,7 +75,13 @@ public class UI {
                 validType = true;
             }
         }
-        System.out.println("\nAccount created: " + name + " (" + type + ")");
+        System.out.println("\nAccount created: " +
+                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getAccountNumber() +
+                " - " +
+                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getName() +
+                " (" +
+                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getType() +
+                ")");
     }
 
     public void displayChartOfAccounts() {
@@ -83,6 +89,39 @@ public class UI {
             chartOfAccounts.printChartOfAccounts();
         } else {
             System.out.println("No accounts have been added to the Chart of Accounts");
+        }
+    }
+
+    public void inputTransaction() {
+        System.out.println("Enter an account number or enter 0 to return");
+        int input = Integer.parseInt(scanner.nextLine());
+        boolean validAccountNumber = false;
+
+//        Break out of loop
+        while (!validAccountNumber) {
+            if (input == 0) {
+                break;
+            }
+
+//            Check for account number and then prompt user to update the balance if account number is valid
+            if (input == chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getAccountNumber()) {
+                System.out.println("\n" +
+                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getAccountNumber() +
+                    " - " +
+                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getName() +
+                    ": " +
+                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getBalance());
+                System.out.println("\nEnter an amount to add or subtract:");
+                System.out.print("\n< ");
+                double updateAmountInput = Double.parseDouble(scanner.nextLine());
+                chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).updateBalance(updateAmountInput);
+                System.out.println("\nAccount balance updated.");
+                System.out.println(chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)));
+                validAccountNumber = true;
+            } else {
+                System.out.println("\nERROR: Account not found");
+                break;
+            }
         }
     }
 }
