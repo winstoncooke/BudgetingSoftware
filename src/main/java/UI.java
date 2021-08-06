@@ -75,13 +75,6 @@ public class UI {
                 validType = true;
             }
         }
-        System.out.println("\nAccount created: " +
-                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getAccountNumber() +
-                " - " +
-                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getName() +
-                " (" +
-                chartOfAccounts.accountList().get(chartOfAccounts.accountList().size() - 1).getType() +
-                ")");
     }
 
     public void displayChartOfAccounts() {

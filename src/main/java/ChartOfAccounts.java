@@ -57,12 +57,18 @@ public class ChartOfAccounts {
     }
 
 //    Add an account to the relevant account type list
-//    *** Add feature to check if account name already exists
     public void add(String name, String type) {
 //        Add Asset account
-        if (type.equals("Asset")) {
+        if (type.equals("Asset") && checkDuplicateAccount(name)) {
             if (assetAccountNumber < 2000) {
                 this.assets.add(new Account(assetAccountNumber, name, type));
+                System.out.println("\nAccount created: " +
+                    accountList().get(accountList().size() - 1).getAccountNumber() +
+                    " - " +
+                    accountList().get(accountList().size() - 1).getName() +
+                    " (" +
+                    accountList().get(accountList().size() - 1).getType() +
+                    ")");
                 assetAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
@@ -71,9 +77,16 @@ public class ChartOfAccounts {
         }
 
 //        Add Liability account
-        if (type.equals("Liability")) {
+        if (type.equals("Liability") && checkDuplicateAccount(name)) {
             if (liabilityAccountNumber < 3000) {
                 this.liabilities.add(new Account(liabilityAccountNumber, name, type));
+                System.out.println("\nAccount created: " +
+                        accountList().get(accountList().size() - 1).getAccountNumber() +
+                        " - " +
+                        accountList().get(accountList().size() - 1).getName() +
+                        " (" +
+                        accountList().get(accountList().size() - 1).getType() +
+                        ")");
                 liabilityAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Liability accounts already exist.");
@@ -82,9 +95,16 @@ public class ChartOfAccounts {
         }
 
 //        Add Equity account
-        if (type.equals("Equity")) {
+        if (type.equals("Equity") && checkDuplicateAccount(name)) {
             if (equityAccountNumber < 4000) {
                 this.equities.add(new Account(equityAccountNumber, name, type));
+                System.out.println("\nAccount created: " +
+                        accountList().get(accountList().size() - 1).getAccountNumber() +
+                        " - " +
+                        accountList().get(accountList().size() - 1).getName() +
+                        " (" +
+                        accountList().get(accountList().size() - 1).getType() +
+                        ")");
                 equityAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
@@ -93,19 +113,26 @@ public class ChartOfAccounts {
         }
     }
 
+    public boolean checkDuplicateAccount(String name) {
+        for (int i = 0; i < accountList().size(); i++) {
+            if (accountList().get(i).getName().equals(name)) {
+                System.out.println("\nERROR: Account already exists");
+                return false;
+            }
+        }
+        return true;
+    }
+
     public double getAccountBalance (int accountNumber) {
         return accountList().get(getIndexNumber(accountNumber)).getBalance();
     }
 
     public int getIndexNumber (int accountNumber) {
-
         for (int i = 0; i < accountList().size(); i++) {
             if (accountList().get(i).getAccountNumber() == accountNumber) {
                 index = i;
             }
         }
-
-
         return index;
     }
 

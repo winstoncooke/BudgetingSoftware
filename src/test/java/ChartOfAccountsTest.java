@@ -23,6 +23,14 @@ public class ChartOfAccountsTest {
         assertEquals(0, chartOfAccounts.accountList(type).size());
     }
 
+    @Test
+    public void newAccountIsNotADuplicate() {
+        String type = "Asset";
+        chartOfAccounts.add("Account 1", type);
+        assertFalse(chartOfAccounts.checkDuplicateAccount("Account 1"));
+        assertTrue(chartOfAccounts.checkDuplicateAccount("Account 2"));
+    }
+
 //     Tests for Asset accounts list
     @Test
     public void assetListIsEmptyAtBeginning() {
@@ -132,12 +140,12 @@ public class ChartOfAccountsTest {
     }
 
     @Test
-    public void canReturnAccountBalanceByUsingAccountNumber() {
+    public void canUpdateAccountBalanceByUsingAccountNumber() {
         String type = "Asset";
         chartOfAccounts.add("Account 1", type);
         chartOfAccounts.add("Account 2", type);
-        chartOfAccounts.accountList(type).get(chartOfAccounts.getIndexNumber(1000)).updateBalance(1.23);
-        chartOfAccounts.accountList(type).get(chartOfAccounts.getIndexNumber(1010)).updateBalance(2.46);
+        chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(1000)).updateBalance(1.23);
+        chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(1010)).updateBalance(2.46);
         assertEquals(1.23, chartOfAccounts.getAccountBalance(1000), 0.0);
         assertEquals(2.46, chartOfAccounts.getAccountBalance(1010), 0.0);
     }
