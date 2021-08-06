@@ -1,13 +1,17 @@
 public class Account {
+    private int accountNumber;
     private String name;
     private String type;
     private double balance;
 
-    public Account(String name, String type) {
+    public Account(int accountNumber, String name, String type) {
+        this.accountNumber = accountNumber;
         this.name = name;
         this.type = type;
         this.balance = 0.00;
     }
+
+    public int getAccountNumber() {return accountNumber;}
 
     public String getName() {
         return name;

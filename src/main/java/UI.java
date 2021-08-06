@@ -27,7 +27,7 @@ public class UI {
             System.out.println("0. Log out");
 
 //             Input user selection
-            System.out.print("\nSelection: ");
+            System.out.print("\n> ");
             int input = Integer.parseInt(scanner.nextLine());
             System.out.println();
             switch (input) {
@@ -51,10 +51,11 @@ public class UI {
         String type = "";
         boolean validType = false;
         while (!validType) {
-            System.out.println("Select a numbered option for your desired account type:");
+            System.out.println("\nSelect a numbered option for your desired account type:");
             System.out.println("1. Asset");
             System.out.println("2. Liability");
             System.out.println("3. Equity");
+            System.out.print("\n> ");
             int input = Integer.parseInt(scanner.nextLine());
 
             if (input == 1) {
