@@ -123,11 +123,19 @@ public class ChartOfAccounts {
         return true;
     }
 
-    public double getAccountBalance (int accountNumber) {
+    public void updateAccountBalance(int accountNumber, double number) {
+        accountList().get(getIndexNumber(accountNumber)).updateBalance(number);
+    }
+
+    public double getAccountBalance(int accountNumber) {
         return accountList().get(getIndexNumber(accountNumber)).getBalance();
     }
 
-    public int getIndexNumber (int accountNumber) {
+    public int getAccountNumber(int accountNumber) {
+        return accountList().get(getIndexNumber(accountNumber)).getAccountNumber();
+    }
+
+    public int getIndexNumber(int accountNumber) {
         for (int i = 0; i < accountList().size(); i++) {
             if (accountList().get(i).getAccountNumber() == accountNumber) {
                 index = i;
@@ -178,6 +186,16 @@ public class ChartOfAccounts {
             equityTotalBalance += equity.getBalance();
         }
         return equityTotalBalance;
+    }
+
+//    Print a single account
+    public void printFormattedAccount(int input) {
+        System.out.println("\n" +
+                accountList().get(getIndexNumber(input)).getAccountNumber() +
+                " - " +
+                accountList().get(getIndexNumber(input)).getName() +
+                ": " +
+                accountList().get(getIndexNumber(input)).getBalance());
     }
 
 //    Print a formatted and comprehensive Chart of Accounts

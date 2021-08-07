@@ -86,7 +86,7 @@ public class UI {
     }
 
     public void inputTransaction() {
-        System.out.println("Enter an account number or enter 0 to return");
+        System.out.println("Enter an account number (Enter 0 to return).");
         int input = Integer.parseInt(scanner.nextLine());
         boolean validAccountNumber = false;
 
@@ -97,19 +97,14 @@ public class UI {
             }
 
 //            Check for account number and then prompt user to update the balance if account number is valid
-            if (input == chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getAccountNumber()) {
-                System.out.println("\n" +
-                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getAccountNumber() +
-                    " - " +
-                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getName() +
-                    ": " +
-                    chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).getBalance());
+            if (input == chartOfAccounts.getAccountNumber(input)) {
+                chartOfAccounts.printFormattedAccount(input);
                 System.out.println("\nEnter an amount to add or subtract:");
                 System.out.print("\n< ");
                 double updateAmountInput = Double.parseDouble(scanner.nextLine());
-                chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)).updateBalance(updateAmountInput);
+                chartOfAccounts.updateAccountBalance(input, updateAmountInput);
                 System.out.println("\nAccount balance updated.");
-                System.out.println(chartOfAccounts.accountList().get(chartOfAccounts.getIndexNumber(input)));
+                chartOfAccounts.printFormattedAccount(input);
                 validAccountNumber = true;
             } else {
                 System.out.println("\nERROR: Account not found");
