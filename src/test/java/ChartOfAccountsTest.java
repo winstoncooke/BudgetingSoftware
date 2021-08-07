@@ -149,4 +149,13 @@ public class ChartOfAccountsTest {
         assertEquals(1.23, chartOfAccounts.getAccountBalance(1000), 0.0);
         assertEquals(2.46, chartOfAccounts.getAccountBalance(1010), 0.0);
     }
+
+    @Test
+    public void doubleEntryFunctionWorks() {
+        chartOfAccounts.add("Cash", "Asset");
+        chartOfAccounts.add("Accounts Payable", "Liability");
+        chartOfAccounts.doubleEntry(1000, 2000, 12345);
+        assertEquals(12345, chartOfAccounts.getAccountBalance(1000), 0.0);
+        assertEquals(12345, chartOfAccounts.getAccountBalance(2000), 0.0);
+    }
 }

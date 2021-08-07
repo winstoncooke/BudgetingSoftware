@@ -188,6 +188,15 @@ public class ChartOfAccounts {
         return equityTotalBalance;
     }
 
+    public void doubleEntry(int firstAccount, int secondAccount, double updateAmountInput) {
+        updateAccountBalance(firstAccount, updateAmountInput);
+        updateAccountBalance(secondAccount, updateAmountInput);
+        System.out.println("\nAccount balances updated.");
+        printFormattedAccount(firstAccount);
+        System.out.print("        ");
+        printFormattedAccount(secondAccount);
+    }
+
 //    Print a single account
     public void printFormattedAccount(int input) {
         System.out.println(

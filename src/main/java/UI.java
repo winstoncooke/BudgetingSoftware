@@ -128,12 +128,7 @@ public class UI {
                     System.out.println("\nEnter an amount to add or subtract:");
                     System.out.print("\n< ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
-                    chartOfAccounts.updateAccountBalance(firstAccount, updateAmountInput);
-                    chartOfAccounts.updateAccountBalance(secondAccount, updateAmountInput);
-                    System.out.println("\nAccount balances updated.");
-                    chartOfAccounts.printFormattedAccount(firstAccount);
-                    System.out.print("        ");
-                    chartOfAccounts.printFormattedAccount(secondAccount);
+                    chartOfAccounts.doubleEntry(firstAccount, secondAccount, updateAmountInput);
                     validAccountNumbers = true;
                 } else {
                     System.out.println("\nERROR: Accounts not found");
