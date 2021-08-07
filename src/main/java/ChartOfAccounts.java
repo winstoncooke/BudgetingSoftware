@@ -190,7 +190,7 @@ public class ChartOfAccounts {
 
 //    Print a single account
     public void printFormattedAccount(int input) {
-        System.out.println("\n" +
+        System.out.println(
                 accountList().get(getIndexNumber(input)).getAccountNumber() +
                 " - " +
                 accountList().get(getIndexNumber(input)).getName() +

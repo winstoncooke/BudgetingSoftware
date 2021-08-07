@@ -86,30 +86,62 @@ public class UI {
     }
 
     public void inputTransaction() {
-        System.out.println("Enter an account number (Enter 0 to return).");
-        int input = Integer.parseInt(scanner.nextLine());
-        boolean validAccountNumber = false;
+        if (chartOfAccounts.accountList().size() < 1) {
+            System.out.println("ERROR: No accounts exist");
+        } else if (chartOfAccounts.accountList().size() < 2) {
+            System.out.println("ERROR: There must be at least two accounts to input a transaction.");
+        } else if (chartOfAccounts.accountList().size() >= 2) {
+            System.out.println("Enter an account number (Enter 0 to return).");
+            int firstAccount = Integer.parseInt(scanner.nextLine());
+            boolean validAccountNumbers = false;
 
-//        Break out of loop
-        while (!validAccountNumber) {
-            if (input == 0) {
-                break;
-            }
+            while (!validAccountNumbers) {
+                //            Break out of loop if 0 is entered
+                if (firstAccount == 0) {
+                    break;
+                }
 
-//            Check for account number and then prompt user to update the balance if account number is valid
-            if (input == chartOfAccounts.getAccountNumber(input)) {
-                chartOfAccounts.printFormattedAccount(input);
-                System.out.println("\nEnter an amount to add or subtract:");
-                System.out.print("\n< ");
-                double updateAmountInput = Double.parseDouble(scanner.nextLine());
-                chartOfAccounts.updateAccountBalance(input, updateAmountInput);
-                System.out.println("\nAccount balance updated.");
-                chartOfAccounts.printFormattedAccount(input);
-                validAccountNumber = true;
-            } else {
-                System.out.println("\nERROR: Account not found");
-                break;
+                if (firstAccount != chartOfAccounts.getAccountNumber(firstAccount)) {
+                    System.out.println("\nERROR: Account not found");
+                    break;
+                }
+
+                System.out.println("\nEnter a second account number (Enter 0 to return).");
+                int secondAccount = Integer.parseInt(scanner.nextLine());
+
+                //            Break out of loop if 0 is entered
+                if (secondAccount == 0) {
+                    break;
+                }
+
+                if (secondAccount != chartOfAccounts.getAccountNumber(secondAccount)) {
+                    System.out.println("\nERROR: Account not found");
+                    break;
+                }
+
+                //            Check for account number and then prompt user to update the balance if account number is valid
+                if (firstAccount == chartOfAccounts.getAccountNumber(firstAccount) &&
+                        secondAccount == chartOfAccounts.getAccountNumber(secondAccount)) {
+                    System.out.println();
+                    chartOfAccounts.printFormattedAccount(firstAccount);
+                    chartOfAccounts.printFormattedAccount(secondAccount);
+                    System.out.println("\nEnter an amount to add or subtract:");
+                    System.out.print("\n< ");
+                    double updateAmountInput = Double.parseDouble(scanner.nextLine());
+                    chartOfAccounts.updateAccountBalance(firstAccount, updateAmountInput);
+                    chartOfAccounts.updateAccountBalance(secondAccount, updateAmountInput);
+                    System.out.println("\nAccount balances updated.");
+                    chartOfAccounts.printFormattedAccount(firstAccount);
+                    System.out.print("        ");
+                    chartOfAccounts.printFormattedAccount(secondAccount);
+                    validAccountNumbers = true;
+                } else {
+                    System.out.println("\nERROR: Accounts not found");
+                    break;
+                }
             }
+        } else {
+            System.out.println("ERROR");
         }
     }
 }
