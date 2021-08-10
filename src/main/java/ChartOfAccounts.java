@@ -113,6 +113,32 @@ public class ChartOfAccounts {
         }
     }
 
+    //    Remove an account from the relevant account type list
+    public void remove(int accountNumber) {
+        String type = accountList().get(getIndexNumber(accountNumber)).getType();
+
+//        Remove Asset account
+        if (type.equals("Asset")) {
+            System.out.println("\nAccount removed: ");
+            printFormattedAccount(accountNumber);
+            this.assets.remove(getIndexNumber(accountNumber));
+        }
+
+//        Remove Liability account
+        if (type.equals("Liability")) {
+            System.out.println("\nAccount removed: ");
+            printFormattedAccount(accountNumber);
+            this.liabilities.remove(getIndexNumber(accountNumber));
+        }
+
+//        Remove Equity account
+        if (type.equals("Equity")) {
+            System.out.println("\nAccount removed: ");
+            printFormattedAccount(accountNumber);
+            this.equities.remove(getIndexNumber(accountNumber));
+        }
+    }
+
     public boolean checkDuplicateAccount(String name) {
         for (int i = 0; i < accountList().size(); i++) {
             if (accountList().get(i).getName().equals(name)) {

@@ -24,6 +24,7 @@ public class UI {
             System.out.println("1. Create a new account");
             System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
+            System.out.println("4. Delete an account");
             System.out.println("0. Log out");
 
 //             Input user selection
@@ -35,15 +36,16 @@ public class UI {
                     System.out.println("You have been logged out. Thank you for your patronage.");
                     break loop;
                 }
-                case 1 -> newAccount();
+                case 1 -> createAccount();
                 case 2 -> displayChartOfAccounts();
                 case 3 -> inputTransaction();
+                case 4 -> deleteAccount();
                 default -> System.out.println("ERROR: Invalid selection");
             }
         }
     }
 
-    public void newAccount() {
+    public void createAccount() {
         System.out.println("Enter the name for the new account: ");
         String name = scanner.nextLine();
 
@@ -93,10 +95,10 @@ public class UI {
         } else if (chartOfAccounts.accountList().size() >= 2) {
             System.out.println("Enter an account number (Enter 0 to return).");
             int firstAccount = Integer.parseInt(scanner.nextLine());
-            boolean validAccountNumbers = false;
+            boolean validAccount = false;
 
-            while (!validAccountNumbers) {
-                //            Break out of loop if 0 is entered
+            while (!validAccount) {
+//                Break out of loop if 0 is entered
                 if (firstAccount == 0) {
                     break;
                 }
@@ -109,7 +111,7 @@ public class UI {
                 System.out.println("\nEnter a second account number (Enter 0 to return).");
                 int secondAccount = Integer.parseInt(scanner.nextLine());
 
-                //            Break out of loop if 0 is entered
+//                Break out of loop if 0 is entered
                 if (secondAccount == 0) {
                     break;
                 }
@@ -119,9 +121,9 @@ public class UI {
                     break;
                 }
 
-                //            Check for account number and then prompt user to update the balance if account number is valid
+//                Check for account number and then prompt user to update the balance if account number is valid
                 if (firstAccount == chartOfAccounts.getAccountNumber(firstAccount) &&
-                        secondAccount == chartOfAccounts.getAccountNumber(secondAccount)) {
+                    secondAccount == chartOfAccounts.getAccountNumber(secondAccount)) {
                     System.out.println();
                     chartOfAccounts.printFormattedAccount(firstAccount);
                     chartOfAccounts.printFormattedAccount(secondAccount);
@@ -129,7 +131,7 @@ public class UI {
                     System.out.print("\n< ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
                     chartOfAccounts.doubleEntry(firstAccount, secondAccount, updateAmountInput);
-                    validAccountNumbers = true;
+                    validAccount = true;
                 } else {
                     System.out.println("\nERROR: Accounts not found");
                     break;
@@ -137,6 +139,31 @@ public class UI {
             }
         } else {
             System.out.println("ERROR");
+        }
+    }
+
+    public void deleteAccount() {
+        if (chartOfAccounts.accountList().size() < 1) {
+            System.out.println("ERROR: No accounts exist");
+        } else {
+            System.out.println("Enter an account number (Enter 0 to return).");
+            int account = Integer.parseInt(scanner.nextLine());
+            boolean validAccount = false;
+
+            while (!validAccount) {
+//                Break out of loop if 0 is entered
+                if (account == 0) {
+                    break;
+                }
+
+                if (account == chartOfAccounts.getAccountNumber(account)) {
+                    chartOfAccounts.remove(account);
+                    validAccount = true;
+                } else {
+                    System.out.println("\nERROR: Account not found");
+                    break;
+                }
+            }
         }
     }
 }

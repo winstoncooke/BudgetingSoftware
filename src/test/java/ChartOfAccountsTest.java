@@ -31,6 +31,15 @@ public class ChartOfAccountsTest {
         assertTrue(chartOfAccounts.checkDuplicateAccount("Account 2"));
     }
 
+    @Test
+    public void accountCanBeDeleted() {
+        String type = "Asset";
+        chartOfAccounts.add("Test Account", type);
+        assertEquals(1, chartOfAccounts.accountList(type).size());
+        chartOfAccounts.remove(chartOfAccounts.accountList(type).get(0).getAccountNumber());
+        assertEquals(0, chartOfAccounts.accountList(type).size());
+    }
+
 //     Tests for Asset accounts list
     @Test
     public void assetListIsEmptyAtBeginning() {

@@ -11,13 +11,6 @@ import static org.junit.Assert.assertTrue;
 public class AccountTest {
     private Account account;
 
-/*
-    @Before
-    public void initialize() {
-
-    }
-*/
-
     @Test
     public void newAccountSuccessfullyCreatesAccount() {
         account = new Account(1000, "Test Account", "Asset");
