@@ -73,7 +73,7 @@ public class UI {
             if (type.equals("Asset") ||
                 type.equals("Liability") ||
                 type.equals("Equity")) {
-                chartOfAccounts.add(name, type);
+                chartOfAccounts.addAccount(name, type);
                 validType = true;
             }
         }
@@ -103,7 +103,7 @@ public class UI {
                     break;
                 }
 
-                if (firstAccount != chartOfAccounts.getAccountNumber(firstAccount)) {
+                if (chartOfAccounts.getAccountNumber(firstAccount) != firstAccount) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
@@ -116,14 +116,19 @@ public class UI {
                     break;
                 }
 
-                if (secondAccount != chartOfAccounts.getAccountNumber(secondAccount)) {
+                if (chartOfAccounts.getAccountNumber(secondAccount) != secondAccount) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
 
+                if (secondAccount == firstAccount) {
+                    System.out.println("\nERROR: Same account selected");
+                    break;
+                }
+
 //                Check for account number and then prompt user to update the balance if account number is valid
-                if (firstAccount == chartOfAccounts.getAccountNumber(firstAccount) &&
-                    secondAccount == chartOfAccounts.getAccountNumber(secondAccount)) {
+                if (chartOfAccounts.getAccountNumber(firstAccount) == firstAccount &&
+                    chartOfAccounts.getAccountNumber(secondAccount) == secondAccount) {
                     System.out.println("\nEnter an amount to debit and credit:");
                     System.out.print("\n< ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
@@ -153,8 +158,8 @@ public class UI {
                     break;
                 }
 
-                if (account == chartOfAccounts.getAccountNumber(account)) {
-                    chartOfAccounts.remove(account);
+                if (chartOfAccounts.getAccountNumber(account) == account) {
+                    chartOfAccounts.removeAccount(account);
                     validAccount = true;
                 } else {
                     System.out.println("\nERROR: Account not found");

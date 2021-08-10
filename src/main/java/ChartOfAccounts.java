@@ -8,7 +8,6 @@ public class ChartOfAccounts {
     private int assetAccountNumber;
     private int liabilityAccountNumber;
     private int equityAccountNumber;
-    private int index;
 
     private double assetTotalBalance;
     private double liabilityTotalBalance;
@@ -57,11 +56,11 @@ public class ChartOfAccounts {
     }
 
 //    Add an account to the relevant account type list
-    public void add(String name, String type) {
+    public void addAccount(String name, String accountType) {
 //        Add Asset account
-        if (type.equals("Asset") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Asset") && checkDuplicateAccount(name)) {
             if (assetAccountNumber < 2000) {
-                this.assets.add(new Account(assetAccountNumber, name, type));
+                assets.add(new Account(assetAccountNumber, name, accountType));
                 System.out.println("\nAccount created: ");
                 System.out.println(accountList().get(accountList().size() - 1));
                 assetAccountNumber += 10;
@@ -72,9 +71,9 @@ public class ChartOfAccounts {
         }
 
 //        Add Liability account
-        if (type.equals("Liability") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Liability") && checkDuplicateAccount(name)) {
             if (liabilityAccountNumber < 3000) {
-                this.liabilities.add(new Account(liabilityAccountNumber, name, type));
+                liabilities.add(new Account(liabilityAccountNumber, name, accountType));
                 System.out.println("\nAccount created: ");
                 System.out.println(accountList().get(accountList().size() - 1));
                 liabilityAccountNumber += 10;
@@ -85,9 +84,9 @@ public class ChartOfAccounts {
         }
 
 //        Add Equity account
-        if (type.equals("Equity") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Equity") && checkDuplicateAccount(name)) {
             if (equityAccountNumber < 4000) {
-                this.equities.add(new Account(equityAccountNumber, name, type));
+                equities.add(new Account(equityAccountNumber, name, accountType));
                 System.out.println("\nAccount created: ");
                 System.out.println(accountList().get(accountList().size() - 1));
                 equityAccountNumber += 10;
@@ -98,30 +97,247 @@ public class ChartOfAccounts {
         }
     }
 
-    //    Remove an account from the relevant account type list
-    public void remove(int accountNumber) {
-        String type = accountList().get(getIndexNumber(accountNumber)).getType();
+//    Remove an account from the relevant account type list
+    public void removeAccount(int accountNumber) {
+        String accountType = accountType(accountNumber);
+        Account accountInfo = accountList(accountType).get(getIndexNumber(accountNumber));
 
 //        Remove Asset account
-        if (type.equals("Asset")) {
+        if (accountType.equals("Asset")) {
+            assets.remove(getIndexNumber(accountNumber));
             System.out.println("\nAccount removed: ");
-            System.out.println(accountList().get(getIndexNumber(accountNumber)));
-            this.assets.remove(getIndexNumber(accountNumber));
+            System.out.println(accountInfo);
         }
 
 //        Remove Liability account
-        if (type.equals("Liability")) {
+        if (accountType.equals("Liability")) {
+            liabilities.remove(getIndexNumber(accountNumber));
             System.out.println("\nAccount removed: ");
-            System.out.println(accountList().get(getIndexNumber(accountNumber)));
-            this.liabilities.remove(getIndexNumber(accountNumber));
+            System.out.println(accountInfo);
         }
 
 //        Remove Equity account
-        if (type.equals("Equity")) {
+        if (accountType.equals("Equity")) {
+            equities.remove(getIndexNumber(accountNumber));
             System.out.println("\nAccount removed: ");
-            System.out.println(accountList().get(getIndexNumber(accountNumber)));
-            this.equities.remove(getIndexNumber(accountNumber));
+            System.out.println(accountInfo);
         }
+    }
+
+    public int getIndexNumber(int accountNumber) {
+        int startPoint = 0;
+        int endPoint = 0;
+        String accountType = accountType(accountNumber);
+
+        if (accountType.equals("Asset")) {
+            endPoint = assets.size() - 1;
+        }
+
+        if (accountType.equals("Liability")) {
+            endPoint = liabilities.size() - 1;
+        }
+
+        if (accountType.equals("Equity")) {
+            endPoint = equities.size() - 1;
+        }
+
+        while (startPoint <= endPoint) {
+            int middle = (endPoint + startPoint) / 2;
+
+            if (accountType.equals("Asset")) {
+                if (assets.get(middle).getAccountNumber() == accountNumber) {
+                    return middle;
+                }
+
+                if (assets.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (assets.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Liability")) {
+                if (liabilities.get(middle).getAccountNumber() == accountNumber) {
+                    return middle;
+                }
+
+                if (liabilities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (liabilities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Equity")) {
+                if (equities.get(middle).getAccountNumber() == accountNumber) {
+                    return middle;
+                }
+
+                if (equities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (equities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public int getAccountNumber(int accountNumber) {
+        int startPoint = 0;
+        int endPoint = 0;
+        String accountType = accountType(accountNumber);
+
+        if (accountType.equals("Asset")) {
+            endPoint = assets.size() - 1;
+        }
+
+        if (accountType.equals("Liability")) {
+            endPoint = liabilities.size() - 1;
+        }
+
+        if (accountType.equals("Equity")) {
+            endPoint = equities.size() - 1;
+        }
+
+        while (startPoint <= endPoint) {
+            int middle = (endPoint + startPoint) / 2;
+
+            if (accountType.equals("Asset")) {
+                if (assets.get(middle).getAccountNumber() == accountNumber) {
+                    return assets.get(middle).getAccountNumber();
+                }
+
+                if (assets.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (assets.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Liability")) {
+                if (liabilities.get(middle).getAccountNumber() == accountNumber) {
+                    return liabilities.get(middle).getAccountNumber();
+                }
+
+                if (liabilities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (liabilities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Equity")) {
+                if (equities.get(middle).getAccountNumber() == accountNumber) {
+                    return equities.get(middle).getAccountNumber();
+                }
+
+                if (equities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (equities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public String getAccountName(int accountNumber) {
+        int startPoint = 0;
+        int endPoint = 0;
+        String accountType = accountType(accountNumber);
+
+        if (accountType.equals("Asset")) {
+            endPoint = assets.size() - 1;
+        }
+
+        if (accountType.equals("Liability")) {
+            endPoint = liabilities.size() - 1;
+        }
+
+        if (accountType.equals("Equity")) {
+            endPoint = equities.size() - 1;
+        }
+
+        while (startPoint <= endPoint) {
+            int middle = (endPoint + startPoint) / 2;
+
+            if (accountType.equals("Asset")) {
+                if (assets.get(middle).getAccountNumber() == accountNumber) {
+                    return assets.get(middle).getName();
+                }
+
+                if (assets.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (assets.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Liability")) {
+                if (liabilities.get(middle).getAccountNumber() == accountNumber) {
+                    return liabilities.get(middle).getName();
+                }
+
+                if (liabilities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (liabilities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+
+            if (accountType.equals("Equity")) {
+                if (equities.get(middle).getAccountNumber() == accountNumber) {
+                    return equities.get(middle).getName();
+                }
+
+                if (equities.get(middle).getAccountNumber() < accountNumber) {
+                    startPoint = middle + 1;
+                }
+
+                if (equities.get(middle).getAccountNumber() > accountNumber) {
+                    endPoint = middle - 1;
+                }
+            }
+        }
+
+        return "\nERROR: Account not found";
+    }
+
+    public String accountType(int accountNumber) {
+        String type = "";
+
+        if (accountNumber >= 1000 && accountNumber < 2000) {
+            type = "Asset";
+        }
+
+        if (accountNumber >= 2000 && accountNumber < 3000) {
+            type = "Liability";
+        }
+
+        if (accountNumber >= 3000 && accountNumber < 4000) {
+            type = "Equity";
+        }
+
+        return type;
     }
 
     public boolean checkDuplicateAccount(String name) {
@@ -135,24 +351,38 @@ public class ChartOfAccounts {
     }
 
     public void updateAccountBalance(int accountNumber, double number) {
-        accountList().get(getIndexNumber(accountNumber)).updateBalance(number);
+        String accountType = accountType(accountNumber);
+
+        if (accountType.equals("Asset")) {
+            assets.get(getIndexNumber(accountNumber)).updateBalance(number);
+        }
+
+        if (accountType.equals("Liability")) {
+            liabilities.get(getIndexNumber(accountNumber)).updateBalance(number);
+        }
+
+        if (accountType.equals("Equity")) {
+            equities.get(getIndexNumber(accountNumber)).updateBalance(number);
+        }
     }
 
     public double getAccountBalance(int accountNumber) {
-        return accountList().get(getIndexNumber(accountNumber)).getBalance();
-    }
+        double accountBalance = 0;
+        String accountType = accountType(accountNumber);
 
-    public int getAccountNumber(int accountNumber) {
-        return accountList().get(getIndexNumber(accountNumber)).getAccountNumber();
-    }
-
-    public int getIndexNumber(int accountNumber) {
-        for (int i = 0; i < accountList().size(); i++) {
-            if (accountList().get(i).getAccountNumber() == accountNumber) {
-                index = i;
-            }
+        if (accountType.equals("Asset")) {
+            accountBalance = assets.get(getIndexNumber(accountNumber)).getBalance();
         }
-        return index;
+
+        if (accountType.equals("Liability")) {
+            accountBalance = liabilities.get(getIndexNumber(accountNumber)).getBalance();
+        }
+
+        if (accountType.equals("Equity")) {
+            accountBalance = equities.get(getIndexNumber(accountNumber)).getBalance();
+        }
+
+        return accountBalance;
     }
 
 //     Sum the total balance for all accounts
