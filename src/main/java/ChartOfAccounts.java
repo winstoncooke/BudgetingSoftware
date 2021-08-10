@@ -62,13 +62,8 @@ public class ChartOfAccounts {
         if (type.equals("Asset") && checkDuplicateAccount(name)) {
             if (assetAccountNumber < 2000) {
                 this.assets.add(new Account(assetAccountNumber, name, type));
-                System.out.println("\nAccount created: " +
-                    accountList().get(accountList().size() - 1).getAccountNumber() +
-                    " - " +
-                    accountList().get(accountList().size() - 1).getName() +
-                    " (" +
-                    accountList().get(accountList().size() - 1).getType() +
-                    ")");
+                System.out.println("\nAccount created: ");
+                System.out.println(accountList().get(accountList().size() - 1));
                 assetAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
@@ -80,13 +75,8 @@ public class ChartOfAccounts {
         if (type.equals("Liability") && checkDuplicateAccount(name)) {
             if (liabilityAccountNumber < 3000) {
                 this.liabilities.add(new Account(liabilityAccountNumber, name, type));
-                System.out.println("\nAccount created: " +
-                        accountList().get(accountList().size() - 1).getAccountNumber() +
-                        " - " +
-                        accountList().get(accountList().size() - 1).getName() +
-                        " (" +
-                        accountList().get(accountList().size() - 1).getType() +
-                        ")");
+                System.out.println("\nAccount created: ");
+                System.out.println(accountList().get(accountList().size() - 1));
                 liabilityAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Liability accounts already exist.");
@@ -98,13 +88,8 @@ public class ChartOfAccounts {
         if (type.equals("Equity") && checkDuplicateAccount(name)) {
             if (equityAccountNumber < 4000) {
                 this.equities.add(new Account(equityAccountNumber, name, type));
-                System.out.println("\nAccount created: " +
-                        accountList().get(accountList().size() - 1).getAccountNumber() +
-                        " - " +
-                        accountList().get(accountList().size() - 1).getName() +
-                        " (" +
-                        accountList().get(accountList().size() - 1).getType() +
-                        ")");
+                System.out.println("\nAccount created: ");
+                System.out.println(accountList().get(accountList().size() - 1));
                 equityAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
@@ -120,21 +105,21 @@ public class ChartOfAccounts {
 //        Remove Asset account
         if (type.equals("Asset")) {
             System.out.println("\nAccount removed: ");
-            printFormattedAccount(accountNumber);
+            System.out.println(accountList().get(getIndexNumber(accountNumber)));
             this.assets.remove(getIndexNumber(accountNumber));
         }
 
 //        Remove Liability account
         if (type.equals("Liability")) {
             System.out.println("\nAccount removed: ");
-            printFormattedAccount(accountNumber);
+            System.out.println(accountList().get(getIndexNumber(accountNumber)));
             this.liabilities.remove(getIndexNumber(accountNumber));
         }
 
 //        Remove Equity account
         if (type.equals("Equity")) {
             System.out.println("\nAccount removed: ");
-            printFormattedAccount(accountNumber);
+            System.out.println(accountList().get(getIndexNumber(accountNumber)));
             this.equities.remove(getIndexNumber(accountNumber));
         }
     }
@@ -218,16 +203,14 @@ public class ChartOfAccounts {
         updateAccountBalance(firstAccount, updateAmountInput);
         updateAccountBalance(secondAccount, updateAmountInput);
         System.out.println("\nAccount balances updated.");
-        printFormattedAccount(firstAccount);
+        printAccountNameWithBalance(firstAccount);
         System.out.print("        ");
-        printFormattedAccount(secondAccount);
+        printAccountNameWithBalance(secondAccount);
     }
 
 //    Print a single account
-    public void printFormattedAccount(int input) {
+    public void printAccountNameWithBalance(int input) {
         System.out.println(
-                accountList().get(getIndexNumber(input)).getAccountNumber() +
-                " - " +
                 accountList().get(getIndexNumber(input)).getName() +
                 ": " +
                 accountList().get(getIndexNumber(input)).getBalance());

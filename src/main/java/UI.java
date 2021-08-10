@@ -93,7 +93,7 @@ public class UI {
         } else if (chartOfAccounts.accountList().size() < 2) {
             System.out.println("ERROR: There must be at least two accounts to input a transaction.");
         } else if (chartOfAccounts.accountList().size() >= 2) {
-            System.out.println("Enter an account number (Enter 0 to return).");
+            System.out.println("Enter an account number to debit (Enter 0 to return).");
             int firstAccount = Integer.parseInt(scanner.nextLine());
             boolean validAccount = false;
 
@@ -108,7 +108,7 @@ public class UI {
                     break;
                 }
 
-                System.out.println("\nEnter a second account number (Enter 0 to return).");
+                System.out.println("\nEnter an account number to credit (Enter 0 to return).");
                 int secondAccount = Integer.parseInt(scanner.nextLine());
 
 //                Break out of loop if 0 is entered
@@ -124,10 +124,7 @@ public class UI {
 //                Check for account number and then prompt user to update the balance if account number is valid
                 if (firstAccount == chartOfAccounts.getAccountNumber(firstAccount) &&
                     secondAccount == chartOfAccounts.getAccountNumber(secondAccount)) {
-                    System.out.println();
-                    chartOfAccounts.printFormattedAccount(firstAccount);
-                    chartOfAccounts.printFormattedAccount(secondAccount);
-                    System.out.println("\nEnter an amount to add or subtract:");
+                    System.out.println("\nEnter an amount to debit and credit:");
                     System.out.print("\n< ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
                     chartOfAccounts.doubleEntry(firstAccount, secondAccount, updateAmountInput);
