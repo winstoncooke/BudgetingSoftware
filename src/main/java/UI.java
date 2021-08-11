@@ -1,9 +1,9 @@
 import java.util.Scanner;
 
 public class UI {
-    private Scanner scanner;
-    private ChartOfAccounts chartOfAccounts;
-    private String user;
+    private final Scanner scanner;
+    private final ChartOfAccounts chartOfAccounts;
+    private final String user;
 
     public UI() {
         this.scanner = new Scanner(System.in);
@@ -47,6 +47,7 @@ public class UI {
 
     public void createAccount() {
         System.out.println("Enter the name for the new account: ");
+        System.out.print("> ");
         String name = scanner.nextLine();
 
 //         Check that user chooses one of the three account types recognized by the system
@@ -73,7 +74,7 @@ public class UI {
             if (type.equals("Asset") ||
                 type.equals("Liability") ||
                 type.equals("Equity")) {
-                chartOfAccounts.addAccount(name, type);
+                chartOfAccounts.add(name, type);
                 validType = true;
             }
         }
@@ -93,7 +94,8 @@ public class UI {
         } else if (chartOfAccounts.accountList().size() < 2) {
             System.out.println("ERROR: There must be at least two accounts to input a transaction.");
         } else if (chartOfAccounts.accountList().size() >= 2) {
-            System.out.println("Enter an account number to debit (Enter 0 to return).");
+            System.out.println("Enter the account number to debit (Enter 0 to return).");
+            System.out.print("> ");
             int firstAccount = Integer.parseInt(scanner.nextLine());
             boolean validAccount = false;
 
@@ -103,12 +105,13 @@ public class UI {
                     break;
                 }
 
-                if (chartOfAccounts.getAccountNumber(firstAccount) != firstAccount) {
+                if (!chartOfAccounts.accountExists(firstAccount)) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
 
-                System.out.println("\nEnter an account number to credit (Enter 0 to return).");
+                System.out.println("\nEnter the account number to credit (Enter 0 to return).");
+                System.out.print("> ");
                 int secondAccount = Integer.parseInt(scanner.nextLine());
 
 //                Break out of loop if 0 is entered
@@ -116,7 +119,7 @@ public class UI {
                     break;
                 }
 
-                if (chartOfAccounts.getAccountNumber(secondAccount) != secondAccount) {
+                if (!chartOfAccounts.accountExists(secondAccount)) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
@@ -127,10 +130,10 @@ public class UI {
                 }
 
 //                Check for account number and then prompt user to update the balance if account number is valid
-                if (chartOfAccounts.getAccountNumber(firstAccount) == firstAccount &&
-                    chartOfAccounts.getAccountNumber(secondAccount) == secondAccount) {
+                if (chartOfAccounts.accountExists(firstAccount) &&
+                    chartOfAccounts.accountExists(secondAccount)) {
                     System.out.println("\nEnter an amount to debit and credit:");
-                    System.out.print("\n< ");
+                    System.out.print("> ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
                     chartOfAccounts.doubleEntry(firstAccount, secondAccount, updateAmountInput);
                     validAccount = true;
@@ -148,7 +151,8 @@ public class UI {
         if (chartOfAccounts.accountList().size() < 1) {
             System.out.println("ERROR: No accounts exist");
         } else {
-            System.out.println("Enter an account number (Enter 0 to return).");
+            System.out.println("Enter the account number to delete (Enter 0 to return).");
+            System.out.print("> ");
             int account = Integer.parseInt(scanner.nextLine());
             boolean validAccount = false;
 
@@ -158,8 +162,8 @@ public class UI {
                     break;
                 }
 
-                if (chartOfAccounts.getAccountNumber(account) == account) {
-                    chartOfAccounts.removeAccount(account);
+                if (chartOfAccounts.accountExists(account)) {
+                    chartOfAccounts.remove(account);
                     validAccount = true;
                 } else {
                     System.out.println("\nERROR: Account not found");

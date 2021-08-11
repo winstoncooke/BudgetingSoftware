@@ -1,10 +1,17 @@
+import java.text.DecimalFormat;
+
 public class Account {
-    private int accountNumber;
-    private String name;
-    private String type;
+    private final DecimalFormat df;
+
+    private final int accountNumber;
+    private final String name;
+    private final String type;
     private double balance;
 
     public Account(int accountNumber, String name, String type) {
+        this.df = (DecimalFormat) DecimalFormat.getInstance();
+        df.applyPattern("#,##0.00;(#,##0.00)");
+
         this.accountNumber = accountNumber;
         this.name = name;
         this.type = type;
@@ -23,6 +30,10 @@ public class Account {
 
     public double getBalance() {
         return balance;
+    }
+
+    public String formattedBalance() {
+        return df.format(balance);
     }
 
     public void setBalance(double balance) {
