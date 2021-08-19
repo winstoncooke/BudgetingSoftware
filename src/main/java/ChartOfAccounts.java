@@ -4,6 +4,8 @@ import java.util.HashMap;
 
 public class ChartOfAccounts {
     private final ArrayList<Account> accounts;
+    private final DirectoryID accountsByID;
+    private final DirectoryName accountsByName;
 
     private final DecimalFormat df;
 
@@ -16,10 +18,56 @@ public class ChartOfAccounts {
         df.applyPattern("#,##0.00;(#,##0.00)");
 
         this.accounts = new ArrayList<>();
+        this.accountsByID = new DirectoryID();
+        this.accountsByName = new DirectoryName();
 
         this.assetAccountNumber = 1000;
         this.liabilityAccountNumber = 2000;
         this.equityAccountNumber = 3000;
+    }
+
+//    Print a formatted and comprehensive Chart of Accounts
+    public void printChartOfAccounts() {
+        System.out.println("* Chart of Accounts *");
+
+//        Print Assets
+        System.out.println("\nASSETS");
+        if (getAssetAccounts().size() > 0) {
+            printAccountList("Asset");
+        } else {
+            System.out.println("* No Asset accounts *");
+        }
+
+//        Print Liabilities
+        System.out.println("\nLIABILITIES");
+        if (getLiabilityAccounts().size() > 0) {
+            printAccountList("Liability");
+        } else {
+            System.out.println("* No Liability accounts *");
+        }
+
+//        Print Equities
+        System.out.println("\nEQUITY");
+        if (getEquityAccounts().size() > 0) {
+            printAccountList("Equity");
+        } else {
+            System.out.println("* No Equity accounts *");
+        }
+    }
+
+    //    Return list of accounts for the requested account type
+    public void printAccountList(String type) {
+        if (type.equals("Asset")) {
+            printAssetAccounts();
+        }
+
+        if (type.equals("Liability")) {
+            printLiabilityAccounts();
+        }
+
+        if (type.equals("Equity")) {
+            printEquityAccounts();
+        }
     }
 
 //    Return list of all accounts
@@ -27,13 +75,10 @@ public class ChartOfAccounts {
         return accounts;
     }
 
-//    Create a hash map for all accounts
-    public HashMap<Integer, Account> accountHashMap() {
-        HashMap<Integer, Account> accountHashMap = new HashMap<>();
-        for (Account account : accounts) {
-            accountHashMap.put(account.getAccountNumber(), account);
+    public void printAssetAccounts() {
+        for (Account asset : getAssetAccounts()) {
+            System.out.println(asset + ": " + asset.formattedBalance());
         }
-        return accountHashMap;
     }
 
     public ArrayList<Account> getAssetAccounts() {
@@ -46,9 +91,9 @@ public class ChartOfAccounts {
         return assets;
     }
 
-    public void printAssetAccounts() {
-        for (Account asset : getAssetAccounts()) {
-            System.out.println(asset + ": " + asset.formattedBalance());
+    public void printLiabilityAccounts() {
+        for (Account liability : getLiabilityAccounts()) {
+            System.out.println(liability + ": " + liability.formattedBalance());
         }
     }
 
@@ -62,9 +107,9 @@ public class ChartOfAccounts {
         return liabilities;
     }
 
-    public void printLiabilityAccounts() {
-        for (Account liability : getLiabilityAccounts()) {
-            System.out.println(liability + ": " + liability.formattedBalance());
+    public void printEquityAccounts() {
+        for (Account equity : getEquityAccounts()) {
+            System.out.println(equity + ": " + equity.formattedBalance());
         }
     }
 
@@ -78,15 +123,9 @@ public class ChartOfAccounts {
         return equities;
     }
 
-    public void printEquityAccounts() {
-        for (Account equity : getEquityAccounts()) {
-            System.out.println(equity + ": " + equity.formattedBalance());
-        }
-    }
-
 //    Search a hash map of all accounts and return true if found
     public boolean checkAccountExists(int accountNumber) {
-        return accountHashMap().get(accountNumber) != null;
+        return accountsByID.getDirectoryByID().containsKey(accountNumber);
     }
 
 //    Add an account to the relevant account type list
@@ -128,23 +167,52 @@ public class ChartOfAccounts {
 //    Used to create an account in the add() method
     public void createAccount(int accountNumber, String name, String accountType) {
         accounts.add(new Account(accountNumber, name, accountType));
+        accountsByID.addAccount(new Account(accountNumber, name, accountType));
+        accountsByName.addAccount(new Account(accountNumber, name, accountType));
         System.out.println("\nAccount created: ");
         System.out.println(accounts.get(accounts.size() - 1));
     }
 
 //    Remove an account from the relevant account type list
     public void remove(int accountNumber) {
-        Account accountInfo = getAccount(accountNumber);
+        Account account = getAccount(accountNumber);
 
 //        Check that the account balance is empty before allowing removal of the account
         if (getAccountBalance(accountNumber) == 0) {
             accounts.remove(getIndexNumber(accountNumber));
+            accountsByID.removeAccount(account);
+            accountsByName.removeAccount(account);
             System.out.println("\nAccount removed: ");
-            System.out.println(accountInfo);
+            System.out.println(account);
         } else {
             System.out.println("\nERROR: Account balance must be empty before deleting the account.");
             System.out.println("Debit/Credit the account as necessary first.");
         }
+    }
+
+//    Perform double entry function for inputting a transaction
+    public void doubleEntry(int firstAccount, int secondAccount, double updateAmountInput) {
+        double firstUpdateAmount;
+        double secondUpdateAmount;
+
+        if (getAccountType(firstAccount).equals("Asset")) {
+            firstUpdateAmount = updateAmountInput;
+        } else {
+            firstUpdateAmount = -1.0 * updateAmountInput;
+        }
+
+        if (getAccountType(secondAccount).equals("Asset")) {
+            secondUpdateAmount = -1.0 * updateAmountInput;
+        } else {
+            secondUpdateAmount = updateAmountInput;
+        }
+
+        updateAccountBalance(firstAccount, firstUpdateAmount);
+        updateAccountBalance(secondAccount, secondUpdateAmount);
+        System.out.println("\nTransaction recorded:");
+        System.out.println(getAccountName(firstAccount) + ": " + df.format(firstUpdateAmount));
+        System.out.print("        ");
+        System.out.println(getAccountName(secondAccount) + ": " + df.format(secondUpdateAmount));
     }
 
     public int getIndexNumber(int accountNumber) {
@@ -172,8 +240,8 @@ public class ChartOfAccounts {
 
 //    Search a hash map of all accounts and return account if found
     public Account getAccount(int accountNumber) {
-        if (accountHashMap().get(accountNumber) != null) {
-            return accountHashMap().get(accountNumber);
+        if (accountsByID.getDirectoryByID().get(accountNumber) != null) {
+            return accountsByID.getDirectoryByID().get(accountNumber);
         }
 
         return null;
@@ -195,85 +263,12 @@ public class ChartOfAccounts {
         return getAccount(accountNumber).getType();
     }
 
-    public void doubleEntry(int firstAccount, int secondAccount, double updateAmountInput) {
-        double firstUpdateAmount;
-        double secondUpdateAmount;
-
-        if (getAccountType(firstAccount).equals("Asset")) {
-            firstUpdateAmount = updateAmountInput;
-        } else {
-            firstUpdateAmount = -1.0 * updateAmountInput;
-        }
-
-        if (getAccountType(secondAccount).equals("Asset")) {
-            secondUpdateAmount = -1.0 * updateAmountInput;
-        } else {
-            secondUpdateAmount = updateAmountInput;
-        }
-
-        updateAccountBalance(firstAccount, firstUpdateAmount);
-        updateAccountBalance(secondAccount, secondUpdateAmount);
-        System.out.println("\nTransaction recorded:");
-        System.out.println(getAccountName(firstAccount) + ": " + df.format(firstUpdateAmount));
-        System.out.print("        ");
-        System.out.println(getAccountName(secondAccount) + ": " + df.format(secondUpdateAmount));
-    }
-
     public void updateAccountBalance(int accountNumber, double number) {
-        getAccount(accountNumber).updateBalance(number);
+        accounts.get(getIndexNumber(accountNumber)).updateBalance(number);
+        accountsByID.getDirectoryByID().get(accountNumber).updateBalance(number);
     }
 
     public boolean checkDuplicateAccount(String name) {
-        for (Account account : accounts) {
-            if (account.getName().equals(name)) {
-                System.out.println("\nERROR: Account already exists");
-                return false;
-            }
-        }
-        return true;
-    }
-
-//    Print a formatted and comprehensive Chart of Accounts
-    public void printChartOfAccounts() {
-        System.out.println("* Chart of Accounts *");
-
-//        Print Assets
-        System.out.println("\nASSETS");
-        if (getAssetAccounts().size() > 0) {
-            printAccountList("Asset");
-        } else {
-            System.out.println("* No Asset accounts *");
-        }
-
-//        Print Liabilities
-        System.out.println("\nLIABILITIES");
-        if (getLiabilityAccounts().size() > 0) {
-            printAccountList("Liability");
-        } else {
-            System.out.println("* No Liability accounts *");
-        }
-
-//        Print Equities
-        System.out.println("\nEQUITY");
-        if (getEquityAccounts().size() > 0) {
-            printAccountList("Equity");
-        } else {
-            System.out.println("* No Equity accounts *");
-        }
-    }
-
-//    Return list of accounts for the requested account type
-    public void printAccountList(String type) {
-        if (type.equals("Asset")) {
-            printAssetAccounts();
-        }
-
-        if (type.equals("Liability")) {
-            printLiabilityAccounts();
-        }
-
-        if (type.equals("Equity")) {
-            printEquityAccounts();
-        }
+        return !accountsByName.getDirectoryByName().containsKey(name);
     }
 }
