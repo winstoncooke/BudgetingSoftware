@@ -24,7 +24,7 @@ public class UI {
             System.out.println("1. Create a new account");
             System.out.println("2. View Chart of Accounts");
             System.out.println("3. Input a transaction");
-            System.out.println("4. Delete an account");
+            System.out.println("4. Remove an account");
             System.out.println("0. Log out");
 
 //             Input user selection
@@ -39,7 +39,7 @@ public class UI {
                 case 1 -> createAccount();
                 case 2 -> displayChartOfAccounts();
                 case 3 -> inputTransaction();
-                case 4 -> deleteAccount();
+                case 4 -> removeAccount();
                 default -> System.out.println("ERROR: Invalid selection");
             }
         }
@@ -81,7 +81,7 @@ public class UI {
     }
 
     public void displayChartOfAccounts() {
-        if (chartOfAccounts.accountList().size() > 0) {
+        if (chartOfAccounts.getAccountList().size() > 0) {
             chartOfAccounts.printChartOfAccounts();
         } else {
             System.out.println("No accounts have been added to the Chart of Accounts");
@@ -89,11 +89,11 @@ public class UI {
     }
 
     public void inputTransaction() {
-        if (chartOfAccounts.accountList().size() < 1) {
+        if (chartOfAccounts.getAccountList().size() < 1) {
             System.out.println("ERROR: No accounts exist");
-        } else if (chartOfAccounts.accountList().size() < 2) {
+        } else if (chartOfAccounts.getAccountList().size() < 2) {
             System.out.println("ERROR: There must be at least two accounts to input a transaction.");
-        } else if (chartOfAccounts.accountList().size() >= 2) {
+        } else if (chartOfAccounts.getAccountList().size() >= 2) {
             System.out.println("Enter the account number to debit (Enter 0 to return).");
             System.out.print("> ");
             int firstAccount = Integer.parseInt(scanner.nextLine());
@@ -105,7 +105,7 @@ public class UI {
                     break;
                 }
 
-                if (!chartOfAccounts.accountExists(firstAccount)) {
+                if (!chartOfAccounts.checkAccountExists(firstAccount)) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
@@ -119,7 +119,7 @@ public class UI {
                     break;
                 }
 
-                if (!chartOfAccounts.accountExists(secondAccount)) {
+                if (!chartOfAccounts.checkAccountExists(secondAccount)) {
                     System.out.println("\nERROR: Account not found");
                     break;
                 }
@@ -130,8 +130,8 @@ public class UI {
                 }
 
 //                Check for account number and then prompt user to update the balance if account number is valid
-                if (chartOfAccounts.accountExists(firstAccount) &&
-                    chartOfAccounts.accountExists(secondAccount)) {
+                if (chartOfAccounts.checkAccountExists(firstAccount) &&
+                    chartOfAccounts.checkAccountExists(secondAccount)) {
                     System.out.println("\nEnter an amount to debit and credit:");
                     System.out.print("> ");
                     double updateAmountInput = Double.parseDouble(scanner.nextLine());
@@ -147,8 +147,8 @@ public class UI {
         }
     }
 
-    public void deleteAccount() {
-        if (chartOfAccounts.accountList().size() < 1) {
+    public void removeAccount() {
+        if (chartOfAccounts.getAccountList().size() < 1) {
             System.out.println("ERROR: No accounts exist");
         } else {
             System.out.println("Enter the account number to delete (Enter 0 to return).");
@@ -162,7 +162,7 @@ public class UI {
                     break;
                 }
 
-                if (chartOfAccounts.accountExists(account)) {
+                if (chartOfAccounts.checkAccountExists(account)) {
                     chartOfAccounts.remove(account);
                     validAccount = true;
                 } else {
