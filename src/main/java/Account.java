@@ -48,4 +48,24 @@ public class Account {
     public String toString() {
         return accountNumber + " - " + name;
     }
+
+    @Override
+    public boolean equals(Object comparedObject) {
+        // if the variables are located in the same place, then they're the same
+        if (this == comparedObject) {
+            return true;
+        }
+
+        // if comparedObject is not of type Account, the objects are not the same
+        if (!(comparedObject instanceof Account comparedAccount)) {
+            return false;
+        }
+
+        // convert the object to an Account-object
+
+        // if the instance variables of the objects are the same, then so are the objects
+        return this.accountNumber == comparedAccount.accountNumber &&
+                this.name.equals(comparedAccount.name) &&
+                this.type.equals(comparedAccount.type);
+    }
 }

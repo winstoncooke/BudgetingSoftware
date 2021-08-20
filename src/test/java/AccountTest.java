@@ -1,12 +1,6 @@
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
-import org.junit.Before;
 import org.junit.Test;
-
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 public class AccountTest {
     private Account account;
@@ -41,5 +35,13 @@ public class AccountTest {
     public void newAccountTypeIsEquity() {
         account = new Account(3000, "Equity Account", "Equity");
         assertEquals("Equity", account.getType());
+    }
+
+    @Test
+    public void checkAccountEqualsOverrideMethodWorks() {
+        account = new Account(2000, "Test Account", "Liability");
+        assertEquals(new Account(2000, "Test Account", "Liability"), account);
+        assertNotEquals(new Account(1000, "Test Account", "Asset"), account);
+        assertNotEquals(new Account(1000, "Test Account", "Asset"), account);
     }
 }
