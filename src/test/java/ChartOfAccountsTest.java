@@ -52,108 +52,120 @@ public class ChartOfAccountsTest {
     @Test
     public void assetListIsEmptyAtBeginning() {
         String type = "Asset";
-        assertEquals(0, chartOfAccounts.getAssetAccounts().size());
+        assertEquals(0, chartOfAccounts.getAssetList().size());
     }
 
     @Test
     public void addingAccountGrowsAssetListByOne() {
         String type = "Asset";
         chartOfAccounts.add("Asset Account", type);
-        assertEquals(1, chartOfAccounts.getAssetAccounts().size());
+        assertEquals(1, chartOfAccounts.getAssetList().size());
     }
 
     @Test
     public void addedAssetAccountIsInList() {
         String type = "Asset";
         chartOfAccounts.add("Asset Account", type);
-        assertEquals("Asset Account", chartOfAccounts.getAssetAccounts().get(0).getName());
+        assertEquals("Asset Account", chartOfAccounts.getAssetList().get(
+                chartOfAccounts.getAssetList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForAssetAccounts() {
         String type = "Asset";
         chartOfAccounts.add("Asset Account", type);
-        assertEquals(1000, chartOfAccounts.getAssetAccounts().get(0).getAccountNumber());
+        assertEquals(1000, chartOfAccounts.getAssetList().get(
+                chartOfAccounts.getAssetList().size() - 1).getAccountNumber());
     }
 
     @Test
     public void balanceForAssetAccountsCanBeSet() {
         String type = "Asset";
         chartOfAccounts.add("Asset Account", type);
-        chartOfAccounts.getAssetAccounts().get(0).updateBalance(1.23);
-        assertEquals(1.23, chartOfAccounts.getAssetAccounts().get(0).getBalance(), 0.0);
+        chartOfAccounts.getAssetList().get(chartOfAccounts.getAssetList().size()
+                - 1).updateBalance(1.23);
+        assertEquals(1.23, chartOfAccounts.getAssetList().get(
+                chartOfAccounts.getAssetList().size() - 1).getBalance(), 0.0);
     }
 
 //     Tests for all Liability accounts list
     @Test
     public void liabilityListIsEmptyAtBeginning() {
         String type = "Liability";
-        assertEquals(0, chartOfAccounts.getLiabilityAccounts().size());
+        assertEquals(0, chartOfAccounts.getLiabilityList().size());
     }
 
     @Test
     public void addingAccountGrowsLiabilityListByOne() {
         String type = "Liability";
         chartOfAccounts.add("Liability Account", type);
-        assertEquals(1, chartOfAccounts.getLiabilityAccounts().size());
+        assertEquals(1, chartOfAccounts.getLiabilityList().size());
     }
 
     @Test
     public void addedLiabilityAccountIsInList() {
         String type = "Liability";
         chartOfAccounts.add("Liability Account", type);
-        assertEquals("Liability Account", chartOfAccounts.getLiabilityAccounts().get(0).getName());
+        assertEquals("Liability Account", chartOfAccounts.getLiabilityList().get(
+                chartOfAccounts.getLiabilityList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForLiabilityAccounts() {
         String type = "Liability";
         chartOfAccounts.add("Liability Account", type);
-        assertEquals(2000, chartOfAccounts.getLiabilityAccounts().get(0).getAccountNumber());
+        assertEquals(2000, chartOfAccounts.getLiabilityList().get(
+                chartOfAccounts.getLiabilityList().size() - 1).getAccountNumber());
     }
 
     @Test
     public void balanceForLiabilityAccountsCanBeSet() {
         String type = "Liability";
         chartOfAccounts.add("Liability Account", type);
-        chartOfAccounts.getLiabilityAccounts().get(0).updateBalance(1.23);
-        assertEquals(1.23, chartOfAccounts.getLiabilityAccounts().get(0).getBalance(), 0.0);
+        chartOfAccounts.getLiabilityList().get(
+                chartOfAccounts.getLiabilityList().size() - 1).updateBalance(1.23);
+        assertEquals(1.23, chartOfAccounts.getLiabilityList().get(
+                chartOfAccounts.getLiabilityList().size() - 1).getBalance(), 0.0);
     }
 
 //     Tests for all Equity accounts list
     @Test
     public void equityListIsEmptyAtBeginning() {
         String type = "Equity";
-        assertEquals(0, chartOfAccounts.getEquityAccounts().size());
+        assertEquals(0, chartOfAccounts.getEquityList().size());
     }
 
     @Test
     public void addingAccountGrowsEquityListByOne() {
         String type = "Equity";
         chartOfAccounts.add("Equity Account", type);
-        assertEquals(1, chartOfAccounts.getEquityAccounts().size());
+        assertEquals(1, chartOfAccounts.getEquityList().size());
     }
 
     @Test
     public void addedEquityAccountIsInList() {
         String type = "Equity";
         chartOfAccounts.add("Equity Account", type);
-        assertEquals("Equity Account", chartOfAccounts.getEquityAccounts().get(0).getName());
+        assertEquals("Equity Account", chartOfAccounts.getEquityList().get(
+                chartOfAccounts.getEquityList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForEquityAccounts() {
         String type = "Equity";
         chartOfAccounts.add("Equity Account", type);
-        assertEquals(3000, chartOfAccounts.getEquityAccounts().get(0).getAccountNumber());
+        assertEquals(3000, chartOfAccounts.getEquityList().get(
+                chartOfAccounts.getEquityList().size() - 1).getAccountNumber());
     }
 
     @Test
     public void balanceForEquityAccountsCanBeSet() {
         String type = "Equity";
         chartOfAccounts.add("Equity Account", type);
-        chartOfAccounts.getEquityAccounts().get(0).updateBalance(1.23);
-        assertEquals(1.23, chartOfAccounts.getEquityAccounts().get(0).getBalance(), 0.0);
+        chartOfAccounts.getEquityList().get(
+                chartOfAccounts.getEquityList().size() - 1).updateBalance(1.23);
+        assertEquals(1.23, chartOfAccounts.getEquityList().get(
+                chartOfAccounts.getEquityList().size() - 1).getBalance(), 0.0);
     }
 
     @Test
