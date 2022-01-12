@@ -8,7 +8,7 @@ public class UI {
     public UI() {
         this.scanner = new Scanner(System.in);
         this.chartOfAccounts = new ChartOfAccounts();
-        this.user = "Winston"; // Add user account support in a future release
+        this.user = "User"; // Add user account support in a future release
     }
 
     public void start() {
@@ -21,8 +21,8 @@ public class UI {
 //             Main menu options
             System.out.println("\n* Main Menu *");
             System.out.println("Select from the following numbered options:");
-            System.out.println("1. Create a new account");
-            System.out.println("2. View Chart of Accounts");
+            System.out.println("1. View Chart of Accounts");
+            System.out.println("2. Create a new account");
             System.out.println("3. Input a transaction");
             System.out.println("4. Remove an account");
             System.out.println("0. Log out");
@@ -33,15 +33,23 @@ public class UI {
             System.out.println();
             switch (input) {
                 case 0 -> {
-                    System.out.println("You have been logged out. Thank you for your patronage.");
+                    System.out.println("You have been logged out.\nThank you for your patronage.");
                     break loop;
                 }
-                case 1 -> createAccount();
-                case 2 -> displayChartOfAccounts();
+                case 1 -> displayChartOfAccounts();
+                case 2 -> createAccount();
                 case 3 -> inputTransaction();
                 case 4 -> removeAccount();
                 default -> System.out.println("ERROR: Invalid selection");
             }
+        }
+    }
+
+    public void displayChartOfAccounts() {
+        if (chartOfAccounts.getAccountList().size() > 0) {
+            chartOfAccounts.printChartOfAccounts();
+        } else {
+            System.out.println("No accounts have been added to the Chart of Accounts");
         }
     }
 
@@ -77,14 +85,6 @@ public class UI {
                 chartOfAccounts.add(name, type);
                 validType = true;
             }
-        }
-    }
-
-    public void displayChartOfAccounts() {
-        if (chartOfAccounts.getAccountList().size() > 0) {
-            chartOfAccounts.printChartOfAccounts();
-        } else {
-            System.out.println("No accounts have been added to the Chart of Accounts");
         }
     }
 

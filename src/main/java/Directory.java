@@ -32,14 +32,6 @@ public class Directory {
         }
     }
 
-    public void setBalance(Account account, Integer number) {
-        int accountNumber = account.getAccountNumber();
-
-        if (this.directory.containsKey(accountNumber)) {
-            directory.get(accountNumber).updateBalance(number);
-        }
-    }
-
     public void printAssetAccounts() {
         for (Account asset : getAssetAccounts()) {
             System.out.println(asset + ": " + asset.formattedBalance());
