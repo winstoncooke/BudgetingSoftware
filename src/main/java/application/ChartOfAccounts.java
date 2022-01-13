@@ -1,3 +1,5 @@
+package application;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +133,7 @@ public class ChartOfAccounts {
     public void createAccount(int accountNumber, String name, String accountType) {
         accounts.add(new Account(accountNumber, name, accountType));
         System.out.println("\nAccount created: ");
-        System.out.println(accounts.getDirectory().get(accounts.getDirectory().size() - 1));
+        System.out.println(accounts.getAllAccounts().get(accounts.getAllAccounts().size() - 1));
     }
 
 //    Remove an account from the relevant account type list

@@ -1,4 +1,5 @@
 // import static org.junit.Assert.assertFalse;
+import application.ChartOfAccounts;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
@@ -19,23 +20,23 @@ public class ChartOfAccountsTest {
     @Test
     public void newAccountMustBeAssetLiabilityOrEquity() {
         String type = "Fraud";
-        chartOfAccounts.add("Test Account", type);
+        chartOfAccounts.add("Test application.Account", type);
         assertEquals(0, chartOfAccounts.getAccountList().size());
     }
 
     @Test
     public void newAccountIsNotADuplicate() {
         String type = "Asset";
-        chartOfAccounts.add("Account 1", type);
-        assertFalse(chartOfAccounts.checkDuplicateAccount("Account 1"));
-        assertTrue(chartOfAccounts.checkDuplicateAccount("Account 2"));
+        chartOfAccounts.add("application.Account 1", type);
+        assertFalse(chartOfAccounts.checkDuplicateAccount("application.Account 1"));
+        assertTrue(chartOfAccounts.checkDuplicateAccount("application.Account 2"));
     }
 
     @Test
     public void accountCanBeDeleted() {
-        chartOfAccounts.add("Test Account 1", "Asset");
-        chartOfAccounts.add("Test Account 2", "Liability");
-        chartOfAccounts.add("Test Account 3", "Equity");
+        chartOfAccounts.add("Test application.Account 1", "Asset");
+        chartOfAccounts.add("Test application.Account 2", "Liability");
+        chartOfAccounts.add("Test application.Account 3", "Equity");
         assertEquals(3, chartOfAccounts.getAccountList().size());
         chartOfAccounts.remove(2000);
         assertEquals(2, chartOfAccounts.getAccountList().size());
@@ -44,7 +45,7 @@ public class ChartOfAccountsTest {
 
     @Test
     public void getAccountNumberSuccessfullyRetrievesNumber() {
-        chartOfAccounts.add("Test Account 1", "Asset");
+        chartOfAccounts.add("Test application.Account 1", "Asset");
         assertEquals(1000, chartOfAccounts.getAccountNumber(1000));
     }
 
@@ -58,22 +59,22 @@ public class ChartOfAccountsTest {
     @Test
     public void addingAccountGrowsAssetListByOne() {
         String type = "Asset";
-        chartOfAccounts.add("Asset Account", type);
+        chartOfAccounts.add("Asset application.Account", type);
         assertEquals(1, chartOfAccounts.getAssetList().size());
     }
 
     @Test
     public void addedAssetAccountIsInList() {
         String type = "Asset";
-        chartOfAccounts.add("Asset Account", type);
-        assertEquals("Asset Account", chartOfAccounts.getAssetList().get(
+        chartOfAccounts.add("Asset application.Account", type);
+        assertEquals("Asset application.Account", chartOfAccounts.getAssetList().get(
                 chartOfAccounts.getAssetList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForAssetAccounts() {
         String type = "Asset";
-        chartOfAccounts.add("Asset Account", type);
+        chartOfAccounts.add("Asset application.Account", type);
         assertEquals(1000, chartOfAccounts.getAssetList().get(
                 chartOfAccounts.getAssetList().size() - 1).getAccountNumber());
     }
@@ -81,7 +82,7 @@ public class ChartOfAccountsTest {
     @Test
     public void balanceForAssetAccountsCanBeSet() {
         String type = "Asset";
-        chartOfAccounts.add("Asset Account", type);
+        chartOfAccounts.add("Asset application.Account", type);
         chartOfAccounts.getAssetList().get(chartOfAccounts.getAssetList().size()
                 - 1).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.getAssetList().get(
@@ -98,22 +99,22 @@ public class ChartOfAccountsTest {
     @Test
     public void addingAccountGrowsLiabilityListByOne() {
         String type = "Liability";
-        chartOfAccounts.add("Liability Account", type);
+        chartOfAccounts.add("Liability application.Account", type);
         assertEquals(1, chartOfAccounts.getLiabilityList().size());
     }
 
     @Test
     public void addedLiabilityAccountIsInList() {
         String type = "Liability";
-        chartOfAccounts.add("Liability Account", type);
-        assertEquals("Liability Account", chartOfAccounts.getLiabilityList().get(
+        chartOfAccounts.add("Liability application.Account", type);
+        assertEquals("Liability application.Account", chartOfAccounts.getLiabilityList().get(
                 chartOfAccounts.getLiabilityList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForLiabilityAccounts() {
         String type = "Liability";
-        chartOfAccounts.add("Liability Account", type);
+        chartOfAccounts.add("Liability application.Account", type);
         assertEquals(2000, chartOfAccounts.getLiabilityList().get(
                 chartOfAccounts.getLiabilityList().size() - 1).getAccountNumber());
     }
@@ -121,7 +122,7 @@ public class ChartOfAccountsTest {
     @Test
     public void balanceForLiabilityAccountsCanBeSet() {
         String type = "Liability";
-        chartOfAccounts.add("Liability Account", type);
+        chartOfAccounts.add("Liability application.Account", type);
         chartOfAccounts.getLiabilityList().get(
                 chartOfAccounts.getLiabilityList().size() - 1).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.getLiabilityList().get(
@@ -138,22 +139,22 @@ public class ChartOfAccountsTest {
     @Test
     public void addingAccountGrowsEquityListByOne() {
         String type = "Equity";
-        chartOfAccounts.add("Equity Account", type);
+        chartOfAccounts.add("Equity application.Account", type);
         assertEquals(1, chartOfAccounts.getEquityList().size());
     }
 
     @Test
     public void addedEquityAccountIsInList() {
         String type = "Equity";
-        chartOfAccounts.add("Equity Account", type);
-        assertEquals("Equity Account", chartOfAccounts.getEquityList().get(
+        chartOfAccounts.add("Equity application.Account", type);
+        assertEquals("Equity application.Account", chartOfAccounts.getEquityList().get(
                 chartOfAccounts.getEquityList().size() - 1).getName());
     }
 
     @Test
     public void accountNumberIsAppropriateForEquityAccounts() {
         String type = "Equity";
-        chartOfAccounts.add("Equity Account", type);
+        chartOfAccounts.add("Equity application.Account", type);
         assertEquals(3000, chartOfAccounts.getEquityList().get(
                 chartOfAccounts.getEquityList().size() - 1).getAccountNumber());
     }
@@ -161,7 +162,7 @@ public class ChartOfAccountsTest {
     @Test
     public void balanceForEquityAccountsCanBeSet() {
         String type = "Equity";
-        chartOfAccounts.add("Equity Account", type);
+        chartOfAccounts.add("Equity application.Account", type);
         chartOfAccounts.getEquityList().get(
                 chartOfAccounts.getEquityList().size() - 1).updateBalance(1.23);
         assertEquals(1.23, chartOfAccounts.getEquityList().get(
@@ -171,8 +172,8 @@ public class ChartOfAccountsTest {
     @Test
     public void accountBalancesCanBeUpdatedByUsingAccountNumber() {
         String type = "Asset";
-        chartOfAccounts.add("Account 1", type);
-        chartOfAccounts.add("Account 2", type);
+        chartOfAccounts.add("application.Account 1", type);
+        chartOfAccounts.add("application.Account 2", type);
         chartOfAccounts.getAccount(1000).updateBalance(1.23);
         chartOfAccounts.getAccount(1010).updateBalance(2.46);
         assertEquals(1.23, chartOfAccounts.getAccountBalance(1000), 0.0);

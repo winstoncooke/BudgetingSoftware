@@ -1,3 +1,5 @@
+package application;
+
 import java.util.Scanner;
 
 public class UI {
@@ -18,7 +20,7 @@ public class UI {
 
     public void mainMenu() {
         loop: while (true) {
-//             Main menu options
+//             application.Main menu options
             System.out.println("\n* Main Menu *");
             System.out.println("Select from the following numbered options:");
             System.out.println("1. View Chart of Accounts");

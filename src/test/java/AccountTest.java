@@ -1,5 +1,7 @@
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.*;
+
+import application.Account;
 import org.junit.Test;
 
 public class AccountTest {
@@ -7,41 +9,41 @@ public class AccountTest {
 
     @Test
     public void newAccountSuccessfullyCreatesAccount() {
-        account = new Account(1000, "Test Account", "Asset");
-        assertEquals("Test Account", account.getName());
+        account = new Account(1000, "Test application.Account", "Asset");
+        assertEquals("Test application.Account", account.getName());
         assertEquals(1000, account.getAccountNumber());
     }
 
     @Test
     public void setBalanceFunctionsProperly() {
-        account = new Account(1000, "Asset Account", "Asset");
+        account = new Account(1000, "Asset application.Account", "Asset");
         account.setBalance(123.45);
         assertEquals(123.45, account.getBalance(), 0.0);
     }
 
     @Test
     public void newAccountTypeIsAsset() {
-        account = new Account(1000, "Asset Account", "Asset");
+        account = new Account(1000, "Asset application.Account", "Asset");
         assertEquals("Asset", account.getType());
     }
 
     @Test
     public void newAccountTypeIsLiability() {
-        account = new Account(2000, "Liability Account", "Liability");
+        account = new Account(2000, "Liability application.Account", "Liability");
         assertEquals("Liability", account.getType());
     }
 
     @Test
     public void newAccountTypeIsEquity() {
-        account = new Account(3000, "Equity Account", "Equity");
+        account = new Account(3000, "Equity application.Account", "Equity");
         assertEquals("Equity", account.getType());
     }
 
     @Test
     public void checkAccountEqualsOverrideMethodWorks() {
-        account = new Account(2000, "Test Account", "Liability");
-        assertEquals(new Account(2000, "Test Account", "Liability"), account);
-        assertNotEquals(new Account(1000, "Test Account", "Asset"), account);
-        assertNotEquals(new Account(1000, "Test Account", "Asset"), account);
+        account = new Account(2000, "Test application.Account", "Liability");
+        assertEquals(new Account(2000, "Test application.Account", "Liability"), account);
+        assertNotEquals(new Account(1000, "Test application.Account", "Asset"), account);
+        assertNotEquals(new Account(1000, "Test application.Account", "Asset"), account);
     }
 }

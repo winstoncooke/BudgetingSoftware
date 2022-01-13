@@ -1,15 +1,17 @@
+package application;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Directory {
-    private HashMap<Integer, Account> directory;
+    private final HashMap<Integer, Account> directory;
 
     public Directory() {
         this.directory = new HashMap<>();
     }
 
     public HashMap<Integer, Account> getDirectory() {
-        return directory;
+        return this.directory;
     }
 
     public void add(Account account) {
@@ -78,5 +80,9 @@ public class Directory {
             }
         }
         return equities;
+    }
+
+    public ArrayList<Account> getAllAccounts() {
+        return new ArrayList<>(directory.values());
     }
 }
