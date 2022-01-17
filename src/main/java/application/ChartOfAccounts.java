@@ -1,11 +1,10 @@
 package application;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class ChartOfAccounts {
     private final Directory accounts;
+    private final Database database;
 
     private final DecimalFormat df;
 
@@ -13,79 +12,33 @@ public class ChartOfAccounts {
     private int liabilityAccountNumber;
     private int equityAccountNumber;
 
-    public ChartOfAccounts() {
+    public ChartOfAccounts(Database database) {
         this.df = (DecimalFormat) DecimalFormat.getInstance();
         df.applyPattern("#,##0.00;(#,##0.00)");
 
         this.accounts = new Directory();
+        this.database = database;
 
         this.assetAccountNumber = 1000;
         this.liabilityAccountNumber = 2000;
         this.equityAccountNumber = 3000;
     }
 
-//    Print a formatted and comprehensive Chart of Accounts
+//    Print a formatted and comprehensive Chart of Accounts REMOVE
     public void printChartOfAccounts() {
         System.out.println("* Chart of Accounts *");
 
 //        Print Assets
         System.out.println("\nASSETS");
-        if (accounts.getAssetAccounts().size() > 0) {
-            printAccountList("Asset");
-        } else {
-            System.out.println("* No Asset accounts *");
-        }
+        database.printByAccountType("Asset");
 
 //        Print Liabilities
         System.out.println("\nLIABILITIES");
-        if (accounts.getLiabilityAccounts().size() > 0) {
-            printAccountList("Liability");
-        } else {
-            System.out.println("* No Liability accounts *");
-        }
+        database.printByAccountType("Liability");
 
 //        Print Equities
-        System.out.println("\nEQUITY");
-        if (accounts.getEquityAccounts().size() > 0) {
-            printAccountList("Equity");
-        } else {
-            System.out.println("* No Equity accounts *");
-        }
-    }
-
-    //    Return list of accounts for the requested account type
-    public void printAccountList(String type) {
-        if (type.equals("Asset")) {
-            accounts.printAssetAccounts();
-        }
-
-        if (type.equals("Liability")) {
-            accounts.printLiabilityAccounts();
-        }
-
-        if (type.equals("Equity")) {
-            accounts.printEquityAccounts();
-        }
-    }
-
-//    Return list of all accounts
-    public HashMap<Integer, Account> getAccountList() {
-        return accounts.getDirectory();
-    }
-
-//    Return a list of asset accounts
-    public ArrayList<Account> getAssetList() {
-        return accounts.getAssetAccounts();
-    }
-
-//    Return a list of liability accounts
-    public ArrayList<Account> getLiabilityList() {
-        return accounts.getLiabilityAccounts();
-    }
-
-//    Return a list of equity accounts
-    public ArrayList<Account> getEquityList() {
-        return accounts.getEquityAccounts();
+        System.out.println("\nEQUITIES");
+        database.printByAccountType("Equity");
     }
 
 //    Search a hash map of all accounts and return true if found
@@ -93,13 +46,16 @@ public class ChartOfAccounts {
         return accounts.getDirectory().containsKey(accountNumber);
     }
 
+    // !!! Add check for duplicate accounts
 //    Add an account to the relevant account type list
     public void add(String name, String accountType) {
 //        Add Asset account
-        if (accountType.equals("Asset") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Asset")) {
+            assetAccountNumber = database.selectLastAccountNumber("Asset") + 10;
+
             if (assetAccountNumber < 2000) {
-                createAccount(assetAccountNumber, name, accountType);
-                assetAccountNumber += 10;
+                database.createAccount(name, accountType);
+                displayAccountAddedMessage("Asset");
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
                 System.out.println("Please delete an Asset account before adding a new one.");
@@ -107,10 +63,12 @@ public class ChartOfAccounts {
         }
 
 //        Add Liability account
-        if (accountType.equals("Liability") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Liability")) {
+            liabilityAccountNumber = database.selectLastAccountNumber("Liability") + 10;
+
             if (liabilityAccountNumber < 3000) {
-                createAccount(liabilityAccountNumber, name, accountType);
-                liabilityAccountNumber += 10;
+                database.createAccount(name, accountType);
+                displayAccountAddedMessage("Liability");
             } else {
                 System.out.println("ERROR: Too many Liability accounts already exist.");
                 System.out.println("Please delete an Liability account before adding a new one.");
@@ -118,10 +76,11 @@ public class ChartOfAccounts {
         }
 
 //        Add Equity account
-        if (accountType.equals("Equity") && checkDuplicateAccount(name)) {
+        if (accountType.equals("Equity")) {
+            equityAccountNumber = database.selectLastAccountNumber("Equity") + 10;
             if (equityAccountNumber < 4000) {
-                createAccount(equityAccountNumber, name, accountType);
-                equityAccountNumber += 10;
+                database.createAccount(name, accountType);
+                displayAccountAddedMessage("Equity");
             } else {
                 System.out.println("ERROR: Too many Equity accounts already exist.");
                 System.out.println("Please delete an Equity account before adding a new one.");
@@ -129,11 +88,17 @@ public class ChartOfAccounts {
         }
     }
 
-//    Used to create an account in the add() method
-    public void createAccount(int accountNumber, String name, String accountType) {
-        accounts.add(new Account(accountNumber, name, accountType));
+////    Used to create an account in the add() method REMOVE
+//    public void createAccount(int accountNumber, String name, String accountType) {
+//        accounts.add(new Account(accountNumber, name, accountType));
+//        System.out.println("\nAccount created: ");
+//        System.out.println(accounts.getAllAccounts().get(accounts.getAllAccounts().size() - 1));
+//    }
+
+    // UPDATE to pull recent account from Database table rather than the array
+    public void displayAccountAddedMessage(String type) {
         System.out.println("\nAccount created: ");
-        System.out.println(accounts.getAllAccounts().get(accounts.getAllAccounts().size() - 1));
+        database.selectLastRecord(type);
     }
 
 //    Remove an account from the relevant account type list
@@ -142,7 +107,7 @@ public class ChartOfAccounts {
 
 //        Check that the account balance is empty before allowing removal of the account
         if (getAccountBalance(accountNumber) == 0) {
-            accounts.remove(account);
+            database.deleteAccount(accountNumber, account.getType());
             System.out.println("\nAccount removed: ");
             System.out.println(account);
         } else {
@@ -168,8 +133,10 @@ public class ChartOfAccounts {
             secondUpdateAmount = updateAmountInput;
         }
 
-        updateAccountBalance(firstAccount, firstUpdateAmount);
-        updateAccountBalance(secondAccount, secondUpdateAmount);
+//        updateAccountBalance(firstAccount, firstUpdateAmount); REMOVE
+        database.updateBalance(firstAccount, firstUpdateAmount);
+//        updateAccountBalance(secondAccount, secondUpdateAmount); REMOVE
+        database.updateBalance(secondAccount, secondUpdateAmount);
         System.out.println("\nTransaction recorded:");
         System.out.println(getAccountName(firstAccount) + ": " + df.format(firstUpdateAmount));
         System.out.print("        ");
@@ -177,33 +144,46 @@ public class ChartOfAccounts {
     }
 
 //    Search a hash map of all accounts and return account if found
-    public Account getAccount(int accountNumber) {
-        if (accounts.getDirectory().get(accountNumber) != null) {
-            return accounts.getDirectory().get(accountNumber);
-        }
+//    public Account getAccount(int accountNumber) {
+//        if (database.checkAccountExists(accountNumber, getAccountType(accountNumber))) {
+//            return accounts.getDirectory().get(accountNumber);
+//        }
+//
+//        return null;
+//    }
 
-        return null;
-    }
-
-    public int getAccountNumber(int accountNumber) {
-        return getAccount(accountNumber).getAccountNumber();
-    }
-
-    public String getAccountName(int accountNumber) {
-        return getAccount(accountNumber).getName();
-    }
-
-    public double getAccountBalance(int accountNumber) {
-        return getAccount(accountNumber).getBalance();
-    }
+//    public int getAccountNumber(int accountNumber) {
+//        return getAccount(accountNumber).getAccountNumber();
+//    }
+//
+//    public String getAccountName(int accountNumber) {
+//        return getAccount(accountNumber).getName();
+//    }
+//
+//    public double getAccountBalance(int accountNumber) {
+//        return getAccount(accountNumber).getBalance();
+//    }
 
     public String getAccountType(int accountNumber) {
-        return getAccount(accountNumber).getType();
+        String type = "";
+        if (accountNumber > 999 && accountNumber < 2000) {
+            type = "Asset";
+        }
+
+        if (accountNumber > 1999 && accountNumber < 3000) {
+            type = "Liability";
+        }
+
+        if (accountNumber > 2999 && accountNumber < 4000) {
+            type = "Equity";
+        }
+
+        return type;
     }
 
-    public void updateAccountBalance(int accountNumber, double number) {
-        accounts.getDirectory().get(accountNumber).updateBalance(number);
-    }
+//    public void updateAccountBalance(int accountNumber, double number) {      REMOVE
+//        accounts.getDirectory().get(accountNumber).updateBalance(number);
+//    }
 
     public boolean checkDuplicateAccount(String name) {
         for (Account account : accounts.getDirectory().values()) {

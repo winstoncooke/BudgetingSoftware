@@ -1,14 +1,22 @@
 // import static org.junit.Assert.assertFalse;
 import application.ChartOfAccounts;
+import application.Database;
 import org.junit.Test;
 import org.junit.Before;
 import static org.junit.Assert.*;
 
 public class ChartOfAccountsTest {
+    private Database database;
     private ChartOfAccounts chartOfAccounts;
 
+    private String PATH = System.getProperty("user.dir") + "/database/";
+    private String fileName = "accounts.db";
+
     @Before
-    public void initialize() { chartOfAccounts = new ChartOfAccounts(); }
+    public void initialize() {
+        this.database = new Database(PATH, fileName);
+        chartOfAccounts = new ChartOfAccounts(database);
+    }
 
 //     Check that the account list created is initially empty
     @Test
