@@ -44,7 +44,6 @@ public class ChartOfAccounts {
         return database.checkAccountExists(accountNumber);
     }
 
-    // !!! Add check for duplicate accounts
 //    Add an account to the relevant account type list
     public void add(String name, String accountType) {
 //        Add Asset account
@@ -55,7 +54,7 @@ public class ChartOfAccounts {
 
             if (assetAccountNumber < 2000 && checkDuplicateAccount(name)) {
                 database.createAccount(assetAccountNumber, name, accountType);
-                displayAccountAddedMessage("Asset");
+                displayAccountAddedMessage(assetAccountNumber);
                 assetAccountNumber += 10;
             } else {
                 System.out.println("ERROR: Too many Asset accounts already exist.");
@@ -72,7 +71,7 @@ public class ChartOfAccounts {
 
             if (liabilityAccountNumber < 3000 && checkDuplicateAccount(name)) {
                 database.createAccount(liabilityAccountNumber, name, accountType);
-                displayAccountAddedMessage("Liability");
+                displayAccountAddedMessage(liabilityAccountNumber);
             } else {
                 System.out.println("ERROR: Too many Liability accounts already exist.");
                 System.out.println("Please delete an Liability account before adding a new one.");
@@ -88,7 +87,7 @@ public class ChartOfAccounts {
 
             if (equityAccountNumber < 4000 && checkDuplicateAccount(name)) {
                 database.createAccount(equityAccountNumber, name, accountType);
-                displayAccountAddedMessage("Equity");
+                displayAccountAddedMessage(equityAccountNumber);
             } else {
                 System.out.println("ERROR: Too many Equity accounts already exist.");
                 System.out.println("Please delete an Equity account before adding a new one.");
@@ -97,9 +96,9 @@ public class ChartOfAccounts {
     }
 
     // UPDATE to pull recent account from Database table rather than the array
-    public void displayAccountAddedMessage(String type) {
+    public void displayAccountAddedMessage(Integer accountNumber) {
         System.out.println("\nAccount created: ");
-        database.selectLastRecord(type);
+        database.selectLastRecord(accountNumber);
     }
 
 //    Remove an account from the relevant account type list
@@ -136,25 +135,21 @@ public class ChartOfAccounts {
             secondUpdateAmount = updateAmountInput;
         }
 
-//        updateAccountBalance(firstAccount, firstUpdateAmount); REMOVE
-        database.updateBalance(firstAccount, firstUpdateAmount);
-//        updateAccountBalance(secondAccount, secondUpdateAmount); REMOVE
-        database.updateBalance(secondAccount, secondUpdateAmount);
+        updateBalance(firstAccount, firstUpdateAmount);
+        updateBalance(secondAccount, secondUpdateAmount);
         System.out.println("\nTransaction recorded:");
         System.out.println(database.getAccountName(firstAccount) + ": " + df.format(firstUpdateAmount));
         System.out.print("        ");
         System.out.println(database.getAccountName(secondAccount) + ": " + df.format(secondUpdateAmount));
     }
 
-//    public void updateAccountBalance(int accountNumber, double number) {      REMOVE
-//        accounts.getDirectory().get(accountNumber).updateBalance(number);
-//    }
+    public void updateBalance(int accountNumber, double updateAmount) {
+        double currentBalance = database.getAccountBalance(accountNumber);
+        double newBalance = currentBalance + updateAmount;
+        database.updateBalance(accountNumber, newBalance);
+    }
 
     public boolean checkDuplicateAccount(String name) {
-        if (database.selectByAccountName(name).contains(name)) {
-            return false;
-        }
-
-        return true;
+        return !database.selectByAccountName(name).contains(name);
     }
 }

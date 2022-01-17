@@ -103,7 +103,6 @@ public class UI {
         }
     }
 
-    // !!! Update to use new methods
     public void inputTransaction() {
         if (database.checkIfAllTablesAreEmpty()) {
             System.out.println("\nERROR: No accounts exist in the Chart of Accounts");
@@ -113,7 +112,6 @@ public class UI {
             System.out.println("Enter the account number to debit (Enter 0 to return).");
             System.out.print("> ");
             int firstAccountNumber = Integer.parseInt(scanner.nextLine());
-            String firstAccountType = database.getAccountType(firstAccountNumber);
             boolean validAccount = false;
 
             while (!validAccount) {
@@ -130,7 +128,6 @@ public class UI {
                 System.out.println("\nEnter the account number to credit (Enter 0 to return).");
                 System.out.print("> ");
                 int secondAccountNumber = Integer.parseInt(scanner.nextLine());
-                String secondAccountType = database.getAccountType(firstAccountNumber);
 
 //                Break out of loop if 0 is entered
                 if (secondAccountNumber == 0) {
@@ -172,8 +169,6 @@ public class UI {
             System.out.println("Enter the account number to delete (Enter 0 to return).");
             System.out.print("> ");
             int accountNumber = Integer.parseInt(scanner.nextLine());
-
-            String type = database.getAccountType(accountNumber);
 
             boolean validAccount = false;
 

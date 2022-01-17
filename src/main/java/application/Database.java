@@ -140,7 +140,7 @@ public class Database {
     // Returns a list of accounts based on type (Asset, Liability, or Equity)
     public ArrayList<String> selectByAccountType(String type) {
         ArrayList<String> accounts = new ArrayList<>();
-        String sql = "SELECT accountNumber, name, balance, type FROM account WHERE type = " + type;
+        String sql = "SELECT accountNumber, name, balance, type FROM account WHERE type = '" + type + "'";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -165,7 +165,7 @@ public class Database {
     // Returns a list based on the name provided
     public ArrayList<String> selectByAccountName(String name) {
         ArrayList<String> accounts = new ArrayList<>();
-        String sql = "SELECT name FROM account WHERE name = " + name;
+        String sql = "SELECT name FROM account WHERE name = '" + name + "'";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -228,7 +228,7 @@ public class Database {
     }
 
     public String getAccountType(int accountNumber) {
-        String sql = "SELECT balance FROM account WHERE accountNumber = " + accountNumber;
+        String sql = "SELECT type FROM account WHERE accountNumber = " + accountNumber;
         String type = "";
 
         try (Connection conn = this.connect();
@@ -245,9 +245,8 @@ public class Database {
     }
 
     // Returns last account added to the specified account type table
-    public void selectLastRecord(String type) {
-        String sql = "SELECT accountNumber, name, balance FROM account" +
-                "WHERE type = " + type + " ORDER BY accountNumber DESC LIMIT 1";
+    public void selectLastRecord(Integer accountNumber) {
+        String sql = "SELECT accountNumber, name, balance FROM account WHERE accountNumber = " + accountNumber;
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -255,8 +254,7 @@ public class Database {
 
             System.out.println(
                 rs.getInt("accountNumber") +  " - " +
-                rs.getString("name") + ": " +
-                df.format(rs.getDouble("balance")));
+                rs.getString("name"));
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
@@ -266,8 +264,8 @@ public class Database {
     public Integer getLastAccountNumber(String type) {
         int lastAccountNumber = -1;
 
-        String sql = "SELECT accountNumber, name, balance FROM account" +
-                " WHERE type = " + type + " ORDER BY accountNumber DESC LIMIT 1";
+        String sql = "SELECT accountNumber, name, balance, type FROM account" +
+                " WHERE type = '" + type + "' ORDER BY accountNumber DESC LIMIT 1";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
