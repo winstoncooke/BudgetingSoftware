@@ -55,64 +55,73 @@ public class Database {
     }
 
     public void createTables() {
-        String sqlAssets = """
-                CREATE TABLE IF NOT EXISTS Asset (
-                accountNumber INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 1000,
+        String sql = """
+                CREATE TABLE IF NOT EXISTS account (
+                accountNumber INTEGER PRIMARY KEY,
                 name varchar(255) NOT NULL,
-                type varchar(255) DEFAULT 'Asset',
-                balance double DEFAULT 0.00
-                );""";
-
-        String sqlLiabilities = """
-                CREATE TABLE IF NOT EXISTS Liability (
-                accountNumber INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 2000,
-                name varchar(255) NOT NULL,
-                type varchar(255) DEFAULT 'Liability',
-                balance double DEFAULT 0.00
-                );""";
-
-        String sqlEquities = """
-                CREATE TABLE IF NOT EXISTS Equity (
-                accountNumber INTEGER PRIMARY KEY AUTOINCREMENT DEFAULT 3000,
-                name varchar(255) NOT NULL,
-                type varchar(255) DEFAULT 'Equity',
+                type varchar(255) NOT NULL,
                 balance double DEFAULT 0.00
                 );""";
 
         try (Connection conn = this.connect();
              Statement stmt = conn.createStatement()) {
-            stmt.execute(sqlAssets);
-            stmt.execute(sqlLiabilities);
-            stmt.execute(sqlEquities);
+
+            stmt.execute(sql);
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void createAccount(String name, String type) {
-        String sql = "INSERT INTO " + type + "(name) VALUES(?)";
-
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setString(1, name);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public void deleteAccount(int accountNumber, String type) {
-        String sql = "DELETE FROM " + type + " WHERE accountNumber = ?";
+    public void createAccount(int accountNumber, String name, String type) {
+        String sql = "INSERT INTO account(accountNumber,name,type) VALUES(?,?,?)";
 
         try (Connection conn = this.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setInt(1, accountNumber);
+            pstmt.setString(2, name);
+            pstmt.setString(3, type);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public void deleteAccount(int accountNumber) {
+        String sql = "DELETE FROM account WHERE accountNumber = ?";
+
+        try (Connection conn = this.connect();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setInt(1, accountNumber);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Returns a list of all accounts
+    public ArrayList<String> selectAllAccounts() {
+        ArrayList<String> accounts = new ArrayList<>();
+        String sql = "SELECT accountNumber, name, balance FROM account";
+
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            // loop through the result set
+            while (rs.next()) {
+                accounts.add(rs.getInt("accountNumber")
+                        + " - "
+                        + rs.getString("name")
+                        + ": "
+                        + df.format(rs.getDouble("balance")));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return accounts;
     }
 
     // Prints each account in the specified account type table for the printChartOfAccounts() method
@@ -131,7 +140,7 @@ public class Database {
     // Returns a list of accounts based on type (Asset, Liability, or Equity)
     public ArrayList<String> selectByAccountType(String type) {
         ArrayList<String> accounts = new ArrayList<>();
-        String sql = "SELECT accountNumber, name, balance FROM " + type;
+        String sql = "SELECT accountNumber, name, balance, type FROM account WHERE type = " + type;
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -153,6 +162,27 @@ public class Database {
         return accounts;
     }
 
+    // Returns a list based on the name provided
+    public ArrayList<String> selectByAccountName(String name) {
+        ArrayList<String> accounts = new ArrayList<>();
+        String sql = "SELECT name FROM account WHERE name = " + name;
+
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            // loop through the result set
+            while (rs.next()) {
+                accounts.add(rs.getString("name"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return accounts;
+    }
+
     public ArrayList<String> getAllAccounts() {
         ArrayList<String> accounts = new ArrayList<>();
 
@@ -163,9 +193,61 @@ public class Database {
         return accounts;
     }
 
+    public String getAccountName(int accountNumber) {
+        String sql = "SELECT name FROM account WHERE accountNumber = " + accountNumber;
+        String name = "";
+
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            name = rs.getString("name");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return name;
+    }
+
+    public Double getAccountBalance(int accountNumber) {
+        String sql = "SELECT balance FROM account WHERE accountNumber = " + accountNumber;
+        double balance = 0;
+
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            balance = rs.getDouble("balance");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return balance;
+    }
+
+    public String getAccountType(int accountNumber) {
+        String sql = "SELECT balance FROM account WHERE accountNumber = " + accountNumber;
+        String type = "";
+
+        try (Connection conn = this.connect();
+             Statement stmt  = conn.createStatement();
+             ResultSet rs    = stmt.executeQuery(sql)){
+
+            type = rs.getString("type");
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+
+        return type;
+    }
+
     // Returns last account added to the specified account type table
     public void selectLastRecord(String type) {
-        String sql = "SELECT accountNumber, name, balance FROM " + type + " ORDER BY accountNumber DESC LIMIT 1";
+        String sql = "SELECT accountNumber, name, balance FROM account" +
+                "WHERE type = " + type + " ORDER BY accountNumber DESC LIMIT 1";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -181,10 +263,11 @@ public class Database {
     }
 
     // Returns the account number for the last account added to the specified account type table
-    public Integer selectLastAccountNumber(String type) {
+    public Integer getLastAccountNumber(String type) {
         int lastAccountNumber = -1;
 
-        String sql = "SELECT accountNumber, name, balance FROM " + type + " ORDER BY accountNumber DESC LIMIT 1";
+        String sql = "SELECT accountNumber, name, balance FROM account" +
+                " WHERE type = " + type + " ORDER BY accountNumber DESC LIMIT 1";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -201,7 +284,7 @@ public class Database {
     // Enables updating account balances for the double entry method
     public void updateBalance(int accountNumber, double balance) {
         String sql = """
-                UPDATE accounts
+                UPDATE account
                 SET balance = ?
                 WHERE accountNumber = ?
                 """;
@@ -218,8 +301,8 @@ public class Database {
     }
 
     // Returns whether an account with the specified account number exists in the specified type table
-    public boolean checkAccountExists(int accountNumber, String type) {
-        String sql = "SELECT FROM " + type + " WHERE accountNumber = " + accountNumber;
+    public boolean checkAccountExists(int accountNumber) {
+        String sql = "SELECT * FROM account WHERE accountNumber = " + accountNumber;
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -238,16 +321,11 @@ public class Database {
 
     // Returns whether any accounts exist in the Chart of Accounts
     public boolean checkIfAllTablesAreEmpty() {
-
-        return checkIfTableIsEmpty("Asset")
-                && checkIfTableIsEmpty("Liability")
-                && checkIfTableIsEmpty("Equity");
+        return selectAllAccounts().isEmpty();
     }
 
     // Returns whether any accounts exist in the specified account type table
     public boolean checkIfTableIsEmpty(String type) {
-        ArrayList<String> list = selectByAccountType(type);
-
-        return list.isEmpty();
+        return !selectByAccountType(type).isEmpty();
     }
 }
