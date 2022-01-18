@@ -27,14 +27,7 @@
   <p align="center">
     project_description
     <br />
-    <a href="https://github.com/winstoncooke/AccountingSoftware"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="https://github.com/winstoncooke/AccountingSoftware">View Demo</a>
-    ·
-    <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Request Feature</a>
+    <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Report Bug / Request Feature</a>
   </p>
 </div>
 
