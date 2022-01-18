@@ -53,7 +53,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <-- <li><a href="#acknowledgments">Acknowledgments</a></li> -->
   </ol>
 </details>
 
@@ -177,8 +176,6 @@ Project Link: [https://github.com/winstoncooke/AccountingSoftware](https://githu
 <!-- 
 ## Acknowledgments
 
-* []()
-* []()
 * []()
 
 <p align="right">(<a href="#top">back to top</a>)</p>
