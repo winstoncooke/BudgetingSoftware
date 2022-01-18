@@ -6,7 +6,7 @@
 *** See the bottom of this document for the declaration of the reference variables
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
-<!-- [![Stars][stars-shield]][stars-url] -->
+[![Stars][stars-shield]][stars-url]
 [![MIT License][license-shield]][license-url]
 [![Issues][issues-shield]][issues-url]
 <!-- [![Forks][forks-shield]][forks-url] -->
@@ -73,7 +73,9 @@
 
 <!-- [![AccountingSoftware Screenshot][product-screenshot]](https://github.com/winstoncooke/AccountingSoftware) -->
 
-UPDATE: Project explanation
+This program is designed to be a simple terminal/backend bookkeeping software. Currently, it allows for accounts to be created and added to a master Chart of Accounts. The accounts can have their balances updated using double entry accounting methods. The aim for the project is to be a lightweight, open-source, double-entry bookkeeping program for small organizations to utilize in lieue of more frustrating software such as QuickBooks.
+
+Any feedback in making this program a more viable tool is welcomed and would be greatly appreciated! Thanks for checking it out.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -120,7 +122,13 @@ Please alert me if that is not the case!
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-UPDATE: To be updated in the future.
+The program allows for the following:
+- View the Chart of Accounts, which lists all created accounts and their respective balances, listed by account number
+- Create an Asset, Liability, or Equity account
+- Input a double-entry transaction to update account balances
+- Remove an account (with a balance of zero)
+
+Safeguards have been put in place to prevent the books from accidentally becoming unbalanced. This includes only allowing a matching balance to be added to each account in the double entry input as well as preventing accounts from being deleted while still carrying a balance. In the future, I aim to add multi-line entry functionality to enable partial amounts on one side of the transaction that sum to the total amount on the other side to be entered. Currently, the best way to achieve this would be to initially debit and credit the relevant accounts and then debit and credit the additional accounts against the original accounts until the balances are appropriate.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -129,10 +137,8 @@ UPDATE: To be updated in the future.
 <!-- ROADMAP -->
 ## Roadmap
 
-- [] Feature 1
-- [] Feature 2
-- [] Feature 3
-    - [] Nested Feature
+- [] Add multi-line entry functionality
+- [] Add GUI
 
 See the [open issues](https://github.com/winstoncooke/AccountingSoftware/issues) for a full list of proposed features (and known issues).
 
