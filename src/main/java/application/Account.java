@@ -20,6 +20,16 @@ public class Account {
         this.balance = 0.00;
     }
 
+    public Account(int accountNumber, String name, String type, double balance) {
+        this.df = (DecimalFormat) DecimalFormat.getInstance();
+        df.applyPattern("#,##0.00;(#,##0.00)");
+
+        this.accountNumber = accountNumber;
+        this.name = name;
+        this.type = type;
+        this.balance = balance;
+    }
+
     public int getAccountNumber() {return accountNumber;}
 
     public String getName() {

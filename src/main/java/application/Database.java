@@ -11,13 +11,11 @@ public class Database {
     private final String PATH;
     private final String url;
 
-    private final DecimalFormat df;
-
     public Database(String PATH, String fileName) {
         this.PATH = PATH;
         this.url = "jdbc:sqlite:" + PATH + fileName;
 
-        this.df = (DecimalFormat) DecimalFormat.getInstance();
+        DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance();
         df.applyPattern("#,##0.00;(#,##0.00)");
     }
 
@@ -100,9 +98,9 @@ public class Database {
     }
 
     // Returns a list of all accounts
-    public ArrayList<String> selectAllAccounts() {
-        ArrayList<String> accounts = new ArrayList<>();
-        String sql = "SELECT accountNumber, name, balance FROM account";
+    public ArrayList<Account> selectAllAccounts() {
+        ArrayList<Account> accounts = new ArrayList<>();
+        String sql = "SELECT accountNumber, name, type, balance FROM account";
 
         try (Connection conn = this.connect();
              Statement stmt  = conn.createStatement();
@@ -110,11 +108,11 @@ public class Database {
 
             // loop through the result set
             while (rs.next()) {
-                accounts.add(rs.getInt("accountNumber")
-                        + " - "
-                        + rs.getString("name")
-                        + ": "
-                        + df.format(rs.getDouble("balance")));
+                accounts.add(new Account(
+                        rs.getInt("accountNumber"),
+                        rs.getString("name"),
+                        rs.getString("type"),
+                        rs.getDouble("balance")));
             }
 
         } catch (SQLException e) {
@@ -126,20 +124,20 @@ public class Database {
 
     // Prints each account in the specified account type table for the printChartOfAccounts() method
     public void printByAccountType(String type) {
-        ArrayList<String> list = selectByAccountType(type);
+        ArrayList<Account> list = selectByAccountType(type);
 
         if (list.isEmpty()) {
             System.out.println("* No " + type + " accounts exist *");
         } else {
-            for (String account : list) {
-                System.out.println(account);
+            for (Account account : list) {
+                System.out.println(account + ": " + account.formattedBalance());
             }
         }
     }
 
     // Returns a list of accounts based on type (Asset, Liability, or Equity)
-    public ArrayList<String> selectByAccountType(String type) {
-        ArrayList<String> accounts = new ArrayList<>();
+    public ArrayList<Account> selectByAccountType(String type) {
+        ArrayList<Account> accounts = new ArrayList<>();
         String sql = "SELECT accountNumber, name, balance, type FROM account WHERE type = '" + type + "'";
 
         try (Connection conn = this.connect();
@@ -148,11 +146,11 @@ public class Database {
 
             // loop through the result set
             while (rs.next()) {
-                accounts.add(rs.getInt("accountNumber")
-                            + " - "
-                            + rs.getString("name")
-                            + ": "
-                            + df.format(rs.getDouble("balance")));
+                accounts.add(new Account(
+                        rs.getInt("accountNumber"),
+                        rs.getString("name"),
+                        rs.getString("type"),
+                        rs.getDouble("balance")));
             }
 
         } catch (SQLException e) {
@@ -183,8 +181,8 @@ public class Database {
         return accounts;
     }
 
-    public ArrayList<String> getAllAccounts() {
-        ArrayList<String> accounts = new ArrayList<>();
+    public ArrayList<Account> getAllAccounts() {
+        ArrayList<Account> accounts = new ArrayList<>();
 
         accounts.addAll(selectByAccountType("Asset"));
         accounts.addAll(selectByAccountType("Liability"));

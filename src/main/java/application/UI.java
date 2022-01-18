@@ -37,7 +37,7 @@ public class UI {
 
     public void mainMenu() {
         loop: while (true) {
-//             application.Main menu options
+//             Main menu options
             System.out.println("\n* Main Menu *\n");
             System.out.println("Select from the following numbered options:");
             System.out.println("1. View Chart of Accounts");
