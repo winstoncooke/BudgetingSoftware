@@ -25,7 +25,6 @@
 <h3 align="center">AccountingSoftware</h3>
 
   <p align="center">
-    <br />
     <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Report Bug / Request Feature</a>
   </p>
 </div>
