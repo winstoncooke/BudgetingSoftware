@@ -7,10 +7,10 @@
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
 [![Stars][stars-shield]][stars-url]
-[![MIT License][license-shield]][license-url]
+[![Forks][forks-shield]][forks-url]
 [![Issues][issues-shield]][issues-url]
-<!-- [![Forks][forks-shield]][forks-url] -->
-<!-- [![Contributors][contributors-shield]][contributors-url] -->
+[![Contributors][contributors-shield]][contributors-url]
+[![MIT License][license-shield]][license-url]
 <!-- [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
 
@@ -25,7 +25,6 @@
 <h3 align="center">AccountingSoftware</h3>
 
   <p align="center">
-    project_description
     <br />
     <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Report Bug / Request Feature</a>
   </p>
