@@ -60,8 +60,9 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
-[![AccountingSoftware Screenshot][product-screenshot]](https://github.com/winstoncooke/AccountingSoftware)
+<div style="width: 50%; height: 50%">
+  [![AccountingSoftware Screenshot][product-screenshot]](https://github.com/winstoncooke/AccountingSoftware)
+</div>
 
 This program is designed to be a simple terminal/backend bookkeeping software. Currently, it allows for accounts to be created and added to a master Chart of Accounts. The accounts can have their balances updated using double entry accounting methods. The aim for the project is to be a lightweight, open-source, double-entry bookkeeping program for small organizations to utilize in lieue of more frustrating software such as QuickBooks.
 
