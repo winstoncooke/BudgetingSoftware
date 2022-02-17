@@ -1,4 +1,4 @@
-package com.app.accountingsoftware.account.asset;
+package com.app.accountingsoftware.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,27 +8,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class AssetService {
+public class AccountService {
 
-    private final AssetRepository assetRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    public AssetService(AssetRepository assetRepository) {
-        this.assetRepository = assetRepository;
+    public AccountService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
-    public List<Asset> getAccounts() {
-        return assetRepository.findAll();
+    public List<Account> getAccounts() {
+        return accountRepository.findAll();
     }
 
-    public Asset getAccountById(long accountNumber) {
+    public Account getAccountById(long accountNumber) {
         checkAccountExists(accountNumber);
-        return assetRepository.getById(accountNumber);
+        return accountRepository.getById(accountNumber);
     }
 
-    public void addAccount(Asset account) {
+    public void addAccount(Account account) {
         checkAccountNameIsNotTaken(account);
-        assetRepository.save(account);
+        accountRepository.save(account);
     }
 
     public void deleteAccount(long accountNumber) {
@@ -36,7 +36,7 @@ public class AssetService {
 
         // Check that the account does not carry a balance before deleting it, so that books remain balanced
         checkAccountBalanceIsZero(accountNumber);
-        assetRepository.deleteById(accountNumber);
+        accountRepository.deleteById(accountNumber);
     }
 
     @Transactional
@@ -50,26 +50,26 @@ public class AssetService {
     @Transactional
     public void updateBalance(long accountNumber, double amount) {
         checkAccountExists(accountNumber);  // Remove when doubleEntry is implemented to eliminate redundancy
-        Asset account = assetRepository.getById(accountNumber);
+        Account account = accountRepository.getById(accountNumber);
         account.updateBalance(amount);
     }
 
     private void checkAccountExists(long accountNumber) {
-        boolean exists = assetRepository.existsById(accountNumber);
+        boolean exists = accountRepository.existsById(accountNumber);
         if (!exists) {
             throw new IllegalStateException("Account " + accountNumber + " does not exist");
         }
     }
 
-    private void checkAccountNameIsNotTaken(Asset account) {
-        Optional<Asset> accountOptional = assetRepository.findAccountByName(account.getName());
+    private void checkAccountNameIsNotTaken(Account account) {
+        Optional<Account> accountOptional = accountRepository.findAccountByName(account.getName());
         if (accountOptional.isPresent()) {
             throw new IllegalStateException("Account name already taken");
         }
     }
 
     private void checkAccountBalanceIsZero(long accountNumber) {
-        Asset account = assetRepository.getById(accountNumber);
+        Account account = accountRepository.getById(accountNumber);
         double balance = account.getBalance();
         if (balance > 0) {
             throw new IllegalStateException("Account balance must be 0 before deleting the account");

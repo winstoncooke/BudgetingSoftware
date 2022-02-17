@@ -1,18 +1,16 @@
-package com.app.accountingsoftware.account.asset;
+package com.app.accountingsoftware.account;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.List;
-
 @Configuration
-public class AssetConfig {
+public class AccountConfig {
 
     @Bean
-    CommandLineRunner assetCommandLineRunner(AssetRepository repository) {
+    CommandLineRunner accountCommandLineRunner(AccountRepository repository) {
         return args -> {
-//            Asset cash = new Asset("Cash");
+//            Account cash = new Account("Cash");
 //            repository.saveAll(List.of(cash));
         };
     }

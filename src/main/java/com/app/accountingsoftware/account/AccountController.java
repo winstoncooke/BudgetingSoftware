@@ -1,4 +1,4 @@
-package com.app.accountingsoftware.account.asset;
+package com.app.accountingsoftware.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -6,46 +6,46 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "api/v1/asset")
-public class AssetController {
+@RequestMapping(path = "api/v1/account")
+public class AccountController {
 
-    private final AssetService assetService;
+    private final AccountService accountService;
 
     @Autowired
-    public AssetController(AssetService assetService) {
-        this.assetService = assetService;
+    public AccountController(AccountService accountService) {
+        this.accountService = accountService;
     }
 
     @GetMapping
-    public List<Asset> getAccounts() {
-        return assetService.getAccounts();
+    public List<Account> getAccounts() {
+        return accountService.getAccounts();
     }
 
 //    @GetMapping(path = "{accountNumber}")
-//    public Asset getAccountById(@PathVariable("accountNumber") long accountNumber) {
-//        return assetService.getAccountById(accountNumber);
+//    public Account getAccountById(@PathVariable("accountNumber") long accountNumber) {
+//        return accountService.getAccountById(accountNumber);
 //    }
 
     @PostMapping
-    public void createAccount(@RequestBody Asset account) {
-        assetService.addAccount(account);
+    public void createAccount(@RequestBody Account account) {
+        accountService.addAccount(account);
     }
 
     @DeleteMapping(path = "{accountNumber}")
     public void deleteAccount(@PathVariable("accountNumber") long accountNumber) {
-        assetService.deleteAccount(accountNumber);
+        accountService.deleteAccount(accountNumber);
     }
 
 //    @PutMapping(path = "{firstAccountNumber}/{secondAccountNumber}")
 //    public void doubleEntry(@PathVariable("firstAccountNumber") long firstAccountNumber,
 //                             @PathVariable("secondAccountNumber") long secondAccountNumber,
 //                             double amount) {
-//        assetService.doubleEntry(firstAccountNumber, secondAccountNumber, amount);
+//        accountService.doubleEntry(firstAccountNumber, secondAccountNumber, amount);
 //    }
 
     @PutMapping(path = "{accountNumber}")
     public void updateBalance(@PathVariable("accountNumber") long accountNumber,
                               @RequestParam double amount) {
-        assetService.updateBalance(accountNumber, amount);
+        accountService.updateBalance(accountNumber, amount);
     }
 }

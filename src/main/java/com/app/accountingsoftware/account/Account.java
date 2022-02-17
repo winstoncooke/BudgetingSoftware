@@ -1,21 +1,21 @@
-package com.app.accountingsoftware.account.asset;
+package com.app.accountingsoftware.account;
 
 import javax.persistence.*;
 import java.text.DecimalFormat;
 
 @Entity
 @Table
-public class Asset {
+public class Account {
     @Id
     @SequenceGenerator(
-            name = "asset_sequence",
-            sequenceName = "asset_sequence",
+            name = "account_sequence",
+            sequenceName = "account_sequence",
             initialValue = 1000,
             allocationSize = 1
     )
     @GeneratedValue(
             strategy = GenerationType.SEQUENCE,
-            generator = "asset_sequence"
+            generator = "account_sequence"
     )
 
     private long accountNumber;
@@ -23,16 +23,16 @@ public class Asset {
     private String type;
     private double balance;
 
-    public Asset() {
+    public Account() {
     }
 
-    public Asset(String name) {
+    public Account(String name) {
         this.name = name;
         this.type = "Asset";
         this.balance = 0.00;
     }
 
-    public Asset(long accountNumber, String name, String type, double balance) {
+    public Account(long accountNumber, String name, String type, double balance) {
         this.accountNumber = accountNumber;
         this.name = name;
         this.type = type;
