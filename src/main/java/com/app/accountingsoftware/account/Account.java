@@ -26,9 +26,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(String name) {
+    public Account(String name, String type) {
         this.name = name;
-        this.type = "Asset";
+        this.type = type;
         this.balance = 0.00;
     }
 
@@ -48,15 +48,19 @@ public class Account {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
+    public String getType() {
+        return this.type;
+    }
+
     public double getBalance() {
-        return balance;
+        return this.balance;
     }
 
     public void setBalance(double balance) {

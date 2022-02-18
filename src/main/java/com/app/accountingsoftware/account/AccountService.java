@@ -48,8 +48,7 @@ public class AccountService {
     }
 
     @Transactional
-    public void updateBalance(long accountNumber, double amount) {
-        checkAccountExists(accountNumber);  // Remove when doubleEntry is implemented to eliminate redundancy
+    private void updateBalance(long accountNumber, double amount) {
         Account account = accountRepository.getById(accountNumber);
         account.updateBalance(amount);
     }
