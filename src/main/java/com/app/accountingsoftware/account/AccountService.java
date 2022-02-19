@@ -43,8 +43,25 @@ public class AccountService {
     public void doubleEntry(long firstAccountNumber, long secondAccountNumber, double amount) {
         checkAccountExists(firstAccountNumber);
         checkAccountExists(secondAccountNumber);
-        updateBalance(firstAccountNumber, amount);
-        updateBalance(secondAccountNumber, amount);
+
+        double firstUpdateAmount = amount;
+        double secondUpdateAmount = amount;
+
+        // Determine if the accounts are being debited or credited based on account type
+        // Debit side of the entry
+        if (!accountRepository.getById(firstAccountNumber).getType().equals("Asset") &&
+                !accountRepository.getById(firstAccountNumber).getType().equals("Expense")) {
+            firstUpdateAmount = amount * -1;
+        }
+
+        // Credit side of the entry
+        if (accountRepository.getById(secondAccountNumber).getType().equals("Asset") ||
+                accountRepository.getById(secondAccountNumber).getType().equals("Expense")) {
+            secondUpdateAmount = amount * -1;
+        }
+
+        updateBalance(firstAccountNumber, firstUpdateAmount);
+        updateBalance(secondAccountNumber, secondUpdateAmount);
     }
 
     @Transactional
