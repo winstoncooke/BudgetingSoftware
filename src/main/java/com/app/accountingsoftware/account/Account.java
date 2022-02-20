@@ -18,7 +18,7 @@ public class Account {
             generator = "account_sequence"
     )
 
-    private long accountNumber;
+    private long id;
     private String name;
     private String type;
     private double balance;
@@ -33,18 +33,18 @@ public class Account {
     }
 
     public Account(long accountNumber, String name, String type, double balance) {
-        this.accountNumber = accountNumber;
+        this.id = accountNumber;
         this.name = name;
         this.type = type;
         this.balance = balance;
     }
 
-    public long getAccountNumber() {
-        return accountNumber;
+    public long getId() {
+        return id;
     }
 
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -75,6 +75,6 @@ public class Account {
 
     @Override
     public String toString() {
-        return accountNumber + " - " + name;
+        return id + " - " + name;
     }
 }
