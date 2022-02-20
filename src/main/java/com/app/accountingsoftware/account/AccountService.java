@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,10 @@ public class AccountService {
 
     public List<Account> getAccounts() {
         return accountRepository.findAll();
+    }
+
+    public List<Account> getAccountsByType(String type) {
+        return accountRepository.findAccountByType(type);
     }
 
     public void addAccount(Account account) {
