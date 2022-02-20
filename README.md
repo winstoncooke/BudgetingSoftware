@@ -74,7 +74,8 @@ Any feedback in making this program a more viable tool is welcomed and would be 
 ### Built With
 
 * [Java](https://www.java.com/)
-* [SQLite](https://sqlite.org/)
+* [PostgreSQL](https://www.postgresql.org/)
+* [Spring Boot](https://spring.io/projects/spring-boot)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -128,7 +129,6 @@ Safeguards have been put in place to prevent the books from accidentally becomin
 ## Roadmap
 
 - [ ] Add multi-line entry functionality
-- [ ] Add GUI
 
 See the [open issues](https://github.com/winstoncooke/AccountingSoftware/issues?q=is:open+is:issue) section for a full list of proposed features and known issues.
 
