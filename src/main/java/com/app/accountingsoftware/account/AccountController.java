@@ -25,15 +25,9 @@ public class AccountController {
         return accountService.getAccounts();
     }
 
-//    @GetMapping(path = "{accountNumber}")
-//    public Account getAccountById(@PathVariable("accountNumber") long accountNumber) {
-//        return accountService.getAccountById(accountNumber);
-//    }
-
     @PostMapping
     public void createAccount(@RequestBody Account account) {
         accountService.addAccount(account);
-
     }
 
     @DeleteMapping(path = "{accountNumber}")

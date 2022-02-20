@@ -21,11 +21,6 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account getAccountById(long accountNumber) {
-        checkAccountExists(accountNumber);
-        return accountRepository.getById(accountNumber);
-    }
-
     public void addAccount(Account account) {
         checkAccountNameIsNotTaken(account);
         accountRepository.save(account);
