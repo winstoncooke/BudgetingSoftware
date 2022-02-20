@@ -63,7 +63,7 @@
 
 <img src="https://github.com/winstoncooke/AccountingSoftware/blob/main/images/screenshot.png" width=45% height=45%>
 
-This program is designed to be a simple terminal/backend bookkeeping software. Currently, it allows for accounts to be created and added to a master Chart of Accounts. The accounts can have their balances updated using double entry accounting methods. The aim for the project is to be a lightweight, open-source, double-entry bookkeeping program for small organizations to utilize in lieue of more frustrating software such as QuickBooks.
+This program is designed to be a simple back end bookkeeping software. Currently, it allows for accounts to be created and added to a master Chart of Accounts. The accounts can have their balances updated using double entry accounting methods. The aim for the project is to be a lightweight, open-source, double-entry bookkeeping program for small organizations to utilize in lieue of more frustrating software such as QuickBooks.
 
 Any feedback in making this program a more viable tool is welcomed and would be greatly appreciated! Thanks for checking it out.
 
@@ -99,11 +99,11 @@ Please alert me if that is not the case!
    ```
 2. Compile the program
    ```sh
-   javac src/main/java/application/Main.java
+   javac src/main/java/com/app/accountingsoftware/AccountingSoftwareApplication.java
    ```
 3. Launch the program
    ```sh
-   java src/main/java/application/Main.java
+   java src/main/java/com/app/accountingsoftware/AccountingSoftwareApplication.java
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -115,7 +115,7 @@ Please alert me if that is not the case!
 
 The program allows for the following:
 - View the Chart of Accounts, which lists all created accounts and their respective balances, listed by account number
-- Create an Asset, Liability, or Equity account
+- Create an Asset, Liability, Equity, Revenue, or Expense account
 - Input a double-entry transaction to update account balances
 - Remove an account (with a balance of zero)
 
@@ -128,6 +128,7 @@ Safeguards have been put in place to prevent the books from accidentally becomin
 <!-- ROADMAP -->
 ## Roadmap
 
+- [ ] Add account numbers based on account type (e.g. Assets 1xxx, Liabilities 2xxx, etc.)
 - [ ] Add multi-line entry functionality
 
 See the [open issues](https://github.com/winstoncooke/AccountingSoftware/issues?q=is:open+is:issue) section for a full list of proposed features and known issues.
