@@ -1,9 +1,5 @@
 package com.app.accountingsoftware.account;
 
-import com.app.accountingsoftware.account.asset.Asset;
-import com.app.accountingsoftware.account.liability.Liability;
-import com.app.accountingsoftware.account.equity.Equity;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
