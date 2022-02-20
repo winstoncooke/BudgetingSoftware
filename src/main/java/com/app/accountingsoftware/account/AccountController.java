@@ -41,10 +41,4 @@ public class AccountController {
                              double amount) {
         accountService.doubleEntry(firstAccountNumber, secondAccountNumber, amount);
     }
-
-//    @PutMapping(path = "{accountNumber}")
-//    public void updateBalance(@PathVariable("accountNumber") long accountNumber,
-//                              @RequestParam double amount) {
-//        accountService.updateBalance(accountNumber, amount);
-//    }
 }
