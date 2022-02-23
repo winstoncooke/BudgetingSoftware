@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.app</groupId>
-	<artifactId>accounting-software</artifactId>
+	<artifactId>budgeting-software</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>accounting-software</name>
-	<description>Demo project for Spring Boot</description>
+	<name>budgeting-software</name>
+	<description>Budgeting software program back end</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
