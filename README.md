@@ -93,17 +93,11 @@ Please alert me if that is not the case!
 
 ### Installation
 
-1. Clone the repo
+1. Download the [latest release](https://github.com/winstoncooke/BudgetingSoftware/releases)
+
+2. Run the program
    ```sh
-   git clone https://github.com/winstoncooke/BudgetingSoftware.git
-   ```
-2. Compile the program
-   ```sh
-   javac src/main/java/com/app/budgetingsoftware/BudgetingSoftwareApplication.java
-   ```
-3. Launch the program
-   ```sh
-   java src/main/java/com/app/budgetingsoftware/BudgetingSoftwareApplication.java
+   java -jar budgeting-software-0.0.1-SNAPSHOT.jar
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
