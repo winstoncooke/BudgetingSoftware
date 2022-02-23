@@ -1,12 +1,12 @@
-package com.app.accountingsoftware;
+package com.app.budgetingsoftware;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class AccountingSoftwareApplication {
+public class BudgetingSoftwareApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(AccountingSoftwareApplication.class, args);
+		SpringApplication.run(BudgetingSoftwareApplication.class, args);
 	}
 }

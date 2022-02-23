@@ -1,10 +1,9 @@
-package com.app.accountingsoftware.account;
+package com.app.budgetingsoftware.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +21,8 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public List<Account> getAccountsByType(String type) {
-        return accountRepository.findAccountByType(type);
+    public List<Account> getAccountsByCategory(String category) {
+        return accountRepository.findAccountByCategory(category);
     }
 
     public void addAccount(Account account) {
@@ -40,40 +39,28 @@ public class AccountService {
     }
 
     @Transactional
-    public void doubleEntry(long firstAccountNumber, long secondAccountNumber, double amount) {
-        checkAccountExists(firstAccountNumber);
-        checkAccountExists(secondAccountNumber);
-
-        double firstUpdateAmount = amount;
-        double secondUpdateAmount = amount;
-
-        // Determine if the accounts are being debited or credited based on account type
-        // Debit side of the entry
-        if (!accountRepository.getById(firstAccountNumber).getType().equals("Asset") &&
-                !accountRepository.getById(firstAccountNumber).getType().equals("Expense")) {
-            firstUpdateAmount = amount * -1;
-        }
-
-        // Credit side of the entry
-        if (accountRepository.getById(secondAccountNumber).getType().equals("Asset") ||
-                accountRepository.getById(secondAccountNumber).getType().equals("Expense")) {
-            secondUpdateAmount = amount * -1;
-        }
-
-        updateBalance(firstAccountNumber, firstUpdateAmount);
-        updateBalance(secondAccountNumber, secondUpdateAmount);
-    }
-
-    @Transactional
-    private void updateBalance(long accountNumber, double amount) {
+    public void addExpense(long accountNumber, double amount) {
+        checkAccountExists(accountNumber);
         Account account = accountRepository.getById(accountNumber);
-        account.updateBalance(amount);
+
+        // Check to see if expenses remain under budget before allowing the transaction
+        checkUpdatedBalanceIsWithinBudget(account, amount);
+        account.updateExpenses(amount);
     }
 
     private void checkAccountExists(long accountNumber) {
         boolean exists = accountRepository.existsById(accountNumber);
         if (!exists) {
             throw new IllegalStateException("Account " + accountNumber + " does not exist");
+        }
+    }
+
+    private void checkUpdatedBalanceIsWithinBudget(Account account, double amount) {
+        double budget = account.getBudget();
+        double expenses = account.getExpenses();
+
+        if (expenses + amount > budget) {
+            throw new IllegalStateException("Total expenses exceed budgeted amount!");
         }
     }
 
@@ -86,9 +73,9 @@ public class AccountService {
 
     private void checkAccountBalanceIsZero(long accountNumber) {
         Account account = accountRepository.getById(accountNumber);
-        double balance = account.getBalance();
+        double balance = account.getExpenses();
         if (balance > 0) {
-            throw new IllegalStateException("Account balance must be 0 before deleting the account");
+            throw new IllegalStateException("Account balance must be 0 before deleting the account!");
         }
     }
 }

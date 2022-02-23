@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.app.accounting-software' is invalid and this project uses 'com.app.accountingsoftware' instead.
+* The original package name 'com.app.accounting-software' is invalid and this project uses 'com.app.budgetingsoftware' instead.
 
 # Getting Started
 

@@ -1,9 +1,8 @@
-package com.app.accountingsoftware.account;
+package com.app.budgetingsoftware.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,9 +21,9 @@ public class AccountController {
         return accountService.getAccounts();
     }
 
-    @GetMapping(path = "{type}")
-    public List<Account> getAccountsByType(@PathVariable String type) {
-        return accountService.getAccountsByType(type);
+    @GetMapping(path = "{category}")
+    public List<Account> getAccountsByCategory(@PathVariable String category) {
+        return accountService.getAccountsByCategory(category);
     }
 
     @PostMapping
@@ -37,10 +36,8 @@ public class AccountController {
         accountService.deleteAccount(accountNumber);
     }
 
-    @PutMapping(path = "{firstAccountNumber}/{secondAccountNumber}")
-    public void doubleEntry(@PathVariable("firstAccountNumber") long firstAccountNumber,
-                             @PathVariable("secondAccountNumber") long secondAccountNumber,
-                             double amount) {
-        accountService.doubleEntry(firstAccountNumber, secondAccountNumber, amount);
+    @PutMapping(path = "{accountId}")
+    public void addExpense(@PathVariable("accountId") long accountId, double amount) {
+        accountService.addExpense(accountId, amount);
     }
 }
