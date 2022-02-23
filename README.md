@@ -76,6 +76,8 @@ Any feedback in making this program a more viable tool is welcomed and would be 
 * [Java](https://www.java.com/)
 * [PostgreSQL](https://www.postgresql.org/)
 * [Spring Boot](https://spring.io/projects/spring-boot)
+* [Hibernate](https://hibernate.org/)
+* [JUnit 5](https://junit.org/junit5/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
