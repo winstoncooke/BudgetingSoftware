@@ -18,14 +18,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/winstoncooke/AccountingSoftware">
+  <a href="https://github.com/winstoncooke/BudgetingSoftware">
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">AccountingSoftware</h3>
+<h3 align="center">BudgetingSoftware</h3>
 
   <p align="center">
-    <a href="https://github.com/winstoncooke/AccountingSoftware/issues">Report Bug / Request Feature</a>
+    <a href="https://github.com/winstoncooke/BudgetingSoftware/issues">Report Bug / Request Feature</a>
   </p>
 </div>
 
@@ -61,9 +61,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="https://github.com/winstoncooke/AccountingSoftware/blob/main/images/screenshot.png" width=45% height=45%>
+<img src="https://github.com/winstoncooke/BudgetingSoftware/blob/main/images/screenshot.png" width=45% height=45%>
 
-This program is designed to be a simple back end bookkeeping software. Currently, it allows for accounts to be created and added to a master Chart of Accounts. The accounts can have their balances updated using double entry accounting methods. The aim for the project is to be a lightweight, open-source, double-entry bookkeeping program for small organizations to utilize in lieue of more frustrating software such as QuickBooks.
+This program is designed to be a simple back end budgeting software. Currently, it allows for accounts to be created with a category and a budget. The accounts can have their balances updated as long as posting an expense doesn't exceed the budgeted amount for the account. The aim for the project is to be a lightweight, open-source, budgeting program.
 
 Any feedback in making this program a more viable tool is welcomed and would be greatly appreciated! Thanks for checking it out.
 
@@ -95,15 +95,15 @@ Please alert me if that is not the case!
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/winstoncooke/AccountingSoftware.git
+   git clone https://github.com/winstoncooke/BudgetingSoftware.git
    ```
 2. Compile the program
    ```sh
-   javac src/main/java/com/app/accountingsoftware/AccountingSoftwareApplication.java
+   javac src/main/java/com/app/budgetingsoftware/BudgetingSoftwareApplication.java
    ```
 3. Launch the program
    ```sh
-   java src/main/java/com/app/accountingsoftware/AccountingSoftwareApplication.java
+   java src/main/java/com/app/budgetingsoftware/BudgetingSoftwareApplication.java
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -114,12 +114,9 @@ Please alert me if that is not the case!
 ## Usage
 
 The program allows for the following:
-- View the Chart of Accounts, which lists all created accounts and their respective balances, listed by account number
-- Create an Asset, Liability, Equity, Revenue, or Expense account
-- Input a double-entry transaction to update account balances
+- Create an account with an associated category and total budget
+- Post expenses to the account that do not exceed the budgeted amount
 - Remove an account (with a balance of zero)
-
-Safeguards have been put in place to prevent the books from accidentally becoming unbalanced. This includes only allowing a matching balance to be added to each account in the double entry input as well as preventing accounts from being deleted while still carrying a balance. In the future, I aim to add multi-line entry functionality to enable partial amounts on one side of the transaction that sum to the total amount on the other side to be entered. Currently, the best way to achieve this would be to initially debit and credit the relevant accounts and then debit and credit the additional accounts against the original accounts until the balances are appropriate.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -128,10 +125,9 @@ Safeguards have been put in place to prevent the books from accidentally becomin
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Add account numbers based on account type (e.g. Assets 1xxx, Liabilities 2xxx, etc.)
-- [ ] Add multi-line entry functionality
+- [ ] Implement a timeline for the budget to reset at the end of the period
 
-See the [open issues](https://github.com/winstoncooke/AccountingSoftware/issues?q=is:open+is:issue) section for a full list of proposed features and known issues.
+See the [open issues](https://github.com/winstoncooke/BudgetingSoftware/issues?q=is:open+is:issue) section for a full list of proposed features and known issues.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -167,7 +163,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Winston Cooke - Please message me via my email address on my [profile](https://github.com/winstoncooke)
 
-Project Link: [https://github.com/winstoncooke/AccountingSoftware](https://github.com/winstoncooke/AccountingSoftware)
+Project Link: [https://github.com/winstoncooke/BudgetingSoftware](https://github.com/winstoncooke/BudgetingSoftware)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -186,16 +182,16 @@ Project Link: [https://github.com/winstoncooke/AccountingSoftware](https://githu
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/winstoncooke/AccountingSoftware.svg?style=for-the-badge
-[contributors-url]: https://github.com/winstoncooke/AccountingSoftware/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/winstoncooke/AccountingSoftware.svg?style=for-the-badge
-[forks-url]: https://github.com/winstoncooke/AccountingSoftware/network/members
-[stars-shield]: https://img.shields.io/github/stars/winstoncooke/AccountingSoftware.svg?style=for-the-badge
-[stars-url]: https://github.com/winstoncooke/AccountingSoftware/stargazers
-[issues-shield]: https://img.shields.io/github/issues/winstoncooke/AccountingSoftware.svg?style=for-the-badge
-[issues-url]: https://github.com/winstoncooke/AccountingSoftware/issues
-[license-shield]: https://img.shields.io/github/license/winstoncooke/AccountingSoftware.svg?style=for-the-badge
-[license-url]: https://github.com/winstoncooke/AccountingSoftware/blob/main/LICENSE
+[contributors-shield]: https://img.shields.io/github/contributors/winstoncooke/BudgetingSoftware.svg?style=for-the-badge
+[contributors-url]: https://github.com/winstoncooke/BudgetingSoftware/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/winstoncooke/BudgetingSoftware.svg?style=for-the-badge
+[forks-url]: https://github.com/winstoncooke/BudgetingSoftware/network/members
+[stars-shield]: https://img.shields.io/github/stars/winstoncooke/BudgetingSoftware.svg?style=for-the-badge
+[stars-url]: https://github.com/winstoncooke/BudgetingSoftware/stargazers
+[issues-shield]: https://img.shields.io/github/issues/winstoncooke/BudgetingSoftware.svg?style=for-the-badge
+[issues-url]: https://github.com/winstoncooke/BudgetingSoftware/issues
+[license-shield]: https://img.shields.io/github/license/winstoncooke/BudgetingSoftware.svg?style=for-the-badge
+[license-url]: https://github.com/winstoncooke/BudgetingSoftware/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/linkedin_username
 [product-screenshot]: images/screenshot.png
