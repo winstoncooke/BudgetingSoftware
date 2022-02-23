@@ -47,10 +47,4 @@ public class Account {
     public void updateBalance (double balance) {
         this.balance += balance;
     }
-
-
-    @Override
-    public String toString() {
-        return id + " - " + name;
-    }
 }
