@@ -61,7 +61,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<img src="https://github.com/winstoncooke/BudgetingSoftware/blob/main/images/screenshot.png" width=45% height=45%>
+<!-- <img src="https://github.com/winstoncooke/BudgetingSoftware/blob/main/images/screenshot.png" width=45% height=45%> -->
 
 This program is designed to be a simple back end budgeting software. Currently, it allows for accounts to be created with a category and a budget. The accounts can have their balances updated as long as posting an expense doesn't exceed the budgeted amount for the account. The aim for the project is to be a lightweight, open-source, budgeting program.
 
