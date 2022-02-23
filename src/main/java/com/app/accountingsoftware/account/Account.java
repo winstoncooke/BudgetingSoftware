@@ -32,27 +32,8 @@ public class Account {
         this.balance = 0.00;
     }
 
-    public Account(long accountNumber, String name, String type, double balance) {
-        this.id = accountNumber;
-        this.name = name;
-        this.type = type;
-        this.balance = balance;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public String getName() {
         return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getType() {
@@ -67,11 +48,6 @@ public class Account {
         this.balance += balance;
     }
 
-    public String getFormattedBalance() {
-        DecimalFormat df = (DecimalFormat) DecimalFormat.getInstance();
-        df.applyPattern("#,##0.00;(#,##0.00)");
-        return df.format(balance);
-    }
 
     @Override
     public String toString() {
